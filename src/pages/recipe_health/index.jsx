@@ -7,9 +7,13 @@ import React from 'react';
 export default class RecipeHealth extends React.Component {
 
 	render() {
+    let content = 'Health Information';
+
+    let title = 'Health Information';
+
 		return (
 			<div>
-				<Actionbar back help />
+				<Actionbar back content={content} help title={title} />
 			</div>
 		);
 	}

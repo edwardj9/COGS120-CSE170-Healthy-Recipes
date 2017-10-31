@@ -7,11 +7,24 @@ import React from 'react';
 
 export default class Search extends React.Component {
 
+  constructor(props) {
+    super(props);
+
+    console.log(props);
+  }
+
 	render() {
+    let content = (
+      <div>
+        <Searchbar />
+      </div>
+    );
+
+    let title = 'Recipes relating to "' + this.props.query + '"';
+
 		return (
 			<div>
-				<Actionbar back help />
-				<Searchbar />
+				<Actionbar back content={content} help title={title} />
 			</div>
 		);
 	}

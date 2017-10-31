@@ -7,9 +7,11 @@ import React from 'react';
 export default class Compare extends React.Component {
 
 	render() {
+		let content = 'Compare';
+
 		return (
 			<div>
-				<Actionbar back help />
+				<Actionbar back content={content} help />
 			</div>
 		);
 	}

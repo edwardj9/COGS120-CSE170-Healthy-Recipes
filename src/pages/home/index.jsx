@@ -8,15 +8,16 @@ import { Button } from 'semantic-ui-react';
 
 export default class Home extends React.Component {
 
-	help(){
-		window.location.href = '/help';
-	}
-
 	render() {
+		let content = (
+			<div>
+				<Searchbar />
+			</div>
+		);
+
 		return (
 			<div>
-				<Actionbar help />
-				<Searchbar />
+				<Actionbar content={content} help />
 			</div>
 		);
 	}

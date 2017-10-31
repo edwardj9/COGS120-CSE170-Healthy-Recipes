@@ -8,6 +8,8 @@ import Search from './pages/search/index';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+const queryString = require('query-string');
+
 export default class App extends React.Component {
 
 	render() {
@@ -22,9 +24,13 @@ export default class App extends React.Component {
 			'*': () => <p>404 Page not found</p>
 		};
 
+		let render = (path, props) => {
+			return React.createElement(routeMap[path], queryString.parse(props.location.search));
+		};
+
 		return (
 			<Switch>
-				{Object.keys(routeMap).map(path => <Route exact path={path} component={routeMap[path]} />)}
+				{Object.keys(routeMap).map(path => <Route exact path={path} render={props => render(path, props)} />)}
 			</Switch>
 		);
 	}
