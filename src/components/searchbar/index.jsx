@@ -18,9 +18,8 @@ export default class Searchbar extends React.Component {
 				<Form onSubmit={this.search.bind(this)}>
 					<Form.Input fluid icon='search' iconPosition='left' onChange={this.isReady.bind(this)} placeholder='Search for recipes' />
 
-					<Transition animation='fade' duration={500} transitionOnMount unmountOnHide visible={this.state.query}>
-						<Button basic={this.state.loading} color='teal' content='Search for recipes' fluid type='submit'>
-						</Button>
+					<Transition animation='fade up' duration={500} transitionOnMount unmountOnHide visible={this.state.query}>
+						<Button basic={this.state.loading} color='teal' content='Search for recipes' fluid type='submit' />
 					</Transition>
 				</Form>
 			</div>

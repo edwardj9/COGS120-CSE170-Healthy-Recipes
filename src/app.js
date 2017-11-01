@@ -24,13 +24,9 @@ export default class App extends React.Component {
 			'*': () => <p>404 Page not found</p>
 		};
 
-		let render = (path, props) => {
-			return React.createElement(routeMap[path], queryString.parse(props.location.search));
-		};
-
 		return (
 			<Switch>
-				{Object.keys(routeMap).map(path => <Route exact path={path} render={props => render(path, props)} />)}
+				{Object.keys(routeMap).map(path => <Route exact path={path} render={props => React.createElement(routeMap[path], Object.assign(props, queryString.parse(props.location.search)))} />)}
 			</Switch>
 		);
 	}

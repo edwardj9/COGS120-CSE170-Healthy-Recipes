@@ -14,7 +14,7 @@ export default class Recipe extends React.Component {
 			</div>
 		);
 
-		let title = 'Recipe Name'
+		let title = 'Recipe Name';
 
 		return (
 			<div>
