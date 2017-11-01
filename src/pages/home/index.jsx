@@ -13,7 +13,7 @@ export default class Home extends React.Component {
 	render() {
 		let content = (
 			<div>
-				<div style={{ margin: '30%' }} />
+				<div style={{ margin: '20%' }} />
 
 				<Image shape='circular' size='small' centered src={icon} />
 
