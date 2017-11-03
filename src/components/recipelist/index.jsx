@@ -1,5 +1,9 @@
+import resources from './page_message.json';
+import globalResources from '../../global/page_message.json';
+
 import React from 'react';
-import { Button, Checkbox, Container, Divider, Header, Image, List, Menu, Transition } from 'semantic-ui-react';
+import ReactDOM from 'react-dom';
+import { Checkbox, Divider, Header, Image, List, Menu, Segment, Transition } from 'semantic-ui-react';
 
 export default class RecipeList extends React.Component {
 
@@ -12,36 +16,58 @@ export default class RecipeList extends React.Component {
 	}
 
 	render() {
-		let recipeItems = [];
-		for (let i = 0; i < 7; ++i)
-			recipeItems.push(<RecipeItem id={i} ref={i} key={i} disabledCheckbox={this.state.selected.indexOf(i) < 0 && this.state.selected.length >= 2} name='Recipe Name' onCheck={isChecked => this.onRecipeCheck(i, isChecked)} imgSrc='https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Color_icon_blue_%26_pink.svg/2000px-Color_icon_blue_%26_pink.svg.png' />);
+		let transitionDuration = 500;
+
+		let recipeItems = Object.keys(this.props.recipes).map(recipeId => {
+			let isChecked = this.state.selected.indexOf(recipeId) > -1;
+			return <RecipeItem id={recipeId} ref={recipeId} key={recipeId} isChecked={isChecked} disabledCheckbox={!isChecked && this.state.selected.length >= 2} name={this.props.recipes[recipeId]} onCheck={isChecked => this.onRecipeCheck(recipeId, isChecked)} imgSrc='https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Color_icon_blue_%26_pink.svg/2000px-Color_icon_blue_%26_pink.svg.png' />;
+		});
 
 		return (
 			<div>
-				<Header as='p' color='grey' content='Check 2 recipes to compare' floated='right' size='tiny' />
+				<Header as='p' color={globalResources.color.primary} content={resources.instructions} size='tiny' textAlign='center' />
 				<Divider clearing hidden />
 
 				<List verticalAlign='middle'>
 					{recipeItems}
 				</List>
 
-				<Transition animation='fade up' duration={500} transitionOnMount unmountOnHide visible={this.state.selected.length >= 2}>
-					<Button basic={this.state.selected.length == 1} color='teal' content='Compare recipes' fluid onClick={this.compareRecipes.bind(this)} />
+				<div ref='padding' />
+
+				<Transition animation='fade up' duration={transitionDuration} onShow={this.padBottom.bind(this)} onHide={this.padBottom.bind(this)} transitionOnMount unmountOnHide visible={this.state.selected.length >= 1}>
+					<Menu borderless fixed='bottom' fluid ref='menu' secondary size='large'>
+						<Segment color={globalResources.color.primary} content={resources.compare.clear} inverted onClick={this.clearRecipes.bind(this)} textAlign='center' vertical />
+
+						<Transition animation='fade up' duration={transitionDuration} onShow={this.padBottom.bind(this)} onHide={this.padBottom.bind(this)} transitionOnMount unmountOnHide visible={this.state.selected.length >= 2}>
+							<Segment color={globalResources.color.secondary} content={resources.compare.confirm} inverted onClick={this.compareRecipes.bind(this)} textAlign='center' vertical />
+						</Transition>
+					</Menu>
 				</Transition>
 			</div>
 		);
 	}
 
-	onRecipeCheck(id, isChecked) {
+	padBottom() {
+		let menu = ReactDOM.findDOMNode(this.refs.menu);
+		ReactDOM.findDOMNode(this.refs.padding).style.height = (menu ? menu.offsetHeight : 0) + 'px';
+	}
+
+	onRecipeCheck(recipeId, isChecked) {
 		if (isChecked) {
-			this.state.selected.push(id);
+			this.state.selected.push(recipeId);
 		} else {
-			let index = this.state.selected.indexOf(id);
+			let index = this.state.selected.indexOf(recipeId);
 			if (index > -1)
 				this.state.selected.splice(index, 1);
 		}
 
 		this.setState(this.state);
+	}
+
+	clearRecipes() {
+		this.setState({
+			selected: []
+		});
 	}
 
 	compareRecipes() {
@@ -56,12 +82,12 @@ class RecipeItem extends React.Component {
 		return (
 			<List.Item>
 				<List.Content floated='right'>
-					<Checkbox disabled={this.props.disabledCheckbox} onChange={(e, d) => this.props.onCheck(d.checked)} />
+					<Checkbox checked={this.props.isChecked} disabled={this.props.disabledCheckbox} onChange={(e, d) => this.props.onCheck(d.checked)} />
 				</List.Content>
 
 				<Image shape='rounded' size='tiny' src={this.props.imgSrc} />
 
-				<List.Content fluid onClick={this.goToRecipe.bind(this)}>
+				<List.Content onClick={this.goToRecipe.bind(this)}>
 					<List.Header as='h2' content={this.props.name} />
 				</List.Content>
 			</List.Item>

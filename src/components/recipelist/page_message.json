@@ -1,0 +1,7 @@
+{
+  "instructions": "Check 2 recipes to compare",
+  "compare": {
+    "clear": "Clear selection",
+    "confirm": "Compare recipes"
+  }
+}

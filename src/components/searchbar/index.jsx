@@ -1,5 +1,8 @@
+import resources from './page_message.json';
+import globalResources from '../../global/page_message.json';
+
 import React from 'react';
-import { Button, Dimmer, Form, Loader, Transition } from 'semantic-ui-react';
+import { Button, Form, Transition } from 'semantic-ui-react';
 
 export default class Searchbar extends React.Component {
 
@@ -16,10 +19,10 @@ export default class Searchbar extends React.Component {
 		return (
 			<div>
 				<Form onSubmit={this.search.bind(this)}>
-					<Form.Input fluid icon='search' iconPosition='left' onChange={this.isReady.bind(this)} placeholder='Search for recipes' />
+					<Form.Input fluid icon='search' iconPosition='left' onChange={this.isReady.bind(this)} placeholder={resources.search.placeholder} />
 
-					<Transition animation='fade up' duration={500} transitionOnMount unmountOnHide visible={this.state.query}>
-						<Button basic={this.state.loading} color='teal' content='Search for recipes' fluid type='submit' />
+					<Transition animation='fade up' duration={500} transitionOnMount unmountOnHide visible={!!this.state.query}>
+						<Button basic={this.state.loading} color={globalResources.color.secondary} content={resources.search.button} fluid type='submit' />
 					</Transition>
 				</Form>
 			</div>
