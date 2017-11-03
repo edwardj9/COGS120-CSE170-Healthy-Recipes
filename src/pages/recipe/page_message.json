@@ -1,3 +1,18 @@
 {
-
+  "help": "Recipe help",
+  "health": {
+    "button": {
+      "text": "Health Information"
+    },
+    "title": "Health Information"
+  },
+  "ingredients": {
+    "title": "Ingredients"
+  },
+  "instructions": {
+    "title": "Instructions"
+  },
+  "loader": {
+    "text": "Getting recipe information"
+  }
 }

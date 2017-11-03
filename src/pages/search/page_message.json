@@ -1,3 +1,7 @@
 {
-
+  "help": "Search help",
+  "loader": {
+    "text": "Getting recipe information"
+  },
+  "title": "Recipes relating to \"-\"'"
 }

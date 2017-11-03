@@ -1,0 +1,13 @@
+{
+  "password": {
+    "label": "Password",
+    "error": "Please enter password"
+  },
+  "submit": {
+    "text": "Login"
+  },
+  "username": {
+    "label": "Username",
+    "error": "Please enter username"
+  }
+}
