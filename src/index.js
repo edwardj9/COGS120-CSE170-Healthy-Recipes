@@ -1,4 +1,4 @@
-import registerServiceWorker from './registerServiceWorker';
+import { unregister } from './global/registerServiceWorker';
 import App from './app';
 
 import React from 'react';
@@ -11,4 +11,4 @@ ReactDOM.render((
 	</BrowserRouter>
 ), document.getElementById('root'));
 
-registerServiceWorker();
+unregister();

@@ -1,0 +1,9 @@
+{
+  "color": {
+    "primary": "grey",
+    "secondary": "teal"
+  },
+  "cookies": {
+    "loggedIn": "logged_in"
+  }
+}
