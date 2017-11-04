@@ -5,6 +5,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Checkbox, Divider, Header, Image, List, Menu, Segment, Transition } from 'semantic-ui-react';
 
+var imageBase = 'https://spoonacular.com/recipeImages/';
+var imageRes = '-480x360'; //Tentative
+
 export default class RecipeList extends React.Component {
 
 	constructor(props) {
@@ -18,9 +21,11 @@ export default class RecipeList extends React.Component {
 	render() {
 		let transitionDuration = 500;
 
-		let recipeItems = Object.keys(this.props.recipes).map(recipeId => {
-			let isChecked = this.state.selected.indexOf(recipeId) > -1;
-			return <RecipeItem id={recipeId} ref={recipeId} key={recipeId} isChecked={isChecked} disabledCheckbox={!isChecked && this.state.selected.length >= 2} name={this.props.recipes[recipeId]} onCheck={isChecked => this.onRecipeCheck(recipeId, isChecked)} imgSrc='https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Color_icon_blue_%26_pink.svg/2000px-Color_icon_blue_%26_pink.svg.png' />;
+		let recipeItems = this.props.recipes.map(recipe => {
+			let isChecked = this.state.selected.indexOf(recipe) > -1;
+			return <RecipeItem id={recipe.id} ref={recipe.id} key={recipe.id} isChecked={isChecked} disabledCheckbox={!isChecked && this.state.selected.length >= 2} 
+				name={recipe.title} time={recipe.readyInMinutes} onCheck={isChecked => this.onRecipeCheck(recipe.id, isChecked)} 
+					imgSrc={imageBase+recipe.id+imageRes+'.jpg'}/>;
 		});
 
 		return (
@@ -28,7 +33,7 @@ export default class RecipeList extends React.Component {
 				<Header as='p' color={globalResources.color.primary} content={resources.instructions} size='tiny' textAlign='center' />
 				<Divider clearing hidden />
 
-				<List verticalAlign='middle'>
+				<List verticalAlign='middle' divided={true}>
 					{recipeItems}
 				</List>
 
@@ -85,10 +90,11 @@ class RecipeItem extends React.Component {
 					<Checkbox checked={this.props.isChecked} disabled={this.props.disabledCheckbox} onChange={(e, d) => this.props.onCheck(d.checked)} />
 				</List.Content>
 
-				<Image shape='rounded' size='tiny' src={this.props.imgSrc} />
+				<Image shape='rounded' size='small' src={this.props.imgSrc} />
 
 				<List.Content onClick={this.goToRecipe.bind(this)}>
-					<List.Header as='h2' content={this.props.name} />
+					<List.Header as='h5' content={this.props.name} />
+					<List.Description content={'Ready in '+ this.props.time+' minutes'}/>
 				</List.Content>
 			</List.Item>
 		);
