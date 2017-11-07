@@ -31,6 +31,7 @@ export default class RecipeList extends React.Component {
 		return (
 			<div>
 				<Header as='p' color={globalResources.color.primary} content={resources.instructions} size='tiny' textAlign='center' />
+				<Header as='p' color={globalResources.color.primary} content={resources.temp} size='tiny' textAlign='center' />
 				<Divider clearing hidden />
 
 				<List verticalAlign='middle' divided={true}>
@@ -94,7 +95,7 @@ class RecipeItem extends React.Component {
 
 				<List.Content onClick={this.goToRecipe.bind(this)}>
 					<List.Header as='h5' content={this.props.name} />
-					<List.Description content={'Ready in '+ this.props.time+' minutes'}/>
+					<List.Description content={'Ready in ' + this.props.time + ' minutes'}/>
 				</List.Content>
 			</List.Item>
 		);

@@ -21,7 +21,7 @@ export default class Recipe extends React.Component {
 	}
 
 	componentWillMount() {
-		let xhr = new XMLHttpRequest();
+		// let xhr = new XMLHttpRequest();
 
 		// xhr.open('GET', 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/' + this.props.match.params.id + '/information?includeNutrition=true');
 		// xhr.setRequestHeader("X-Mashape-Key", process.env.API_KEY);
@@ -69,15 +69,15 @@ export default class Recipe extends React.Component {
 		let headerSize = 'medium';
 
 		let ingredients = (
-			<List bulleted vertical>
+			<List bulleted>
 				{this.state.ingredients.map(ingredient => <List.Item description={ingredient} key={ingredient} />)}
 			</List>
 		);
 
 		let instructions = Object.keys(this.state.instructions).map(instructionSet => (
-			<div>
+			<div key={instructionSet}>
 				{!!instructionSet ? <Header content={instructionSet} size='small' /> : undefined}
-				<List ordered vertical>
+				<List ordered>
 					{this.state.instructions[instructionSet].map(instruction => <List.Item description={instruction} key={instruction} />)}
 				</List>
 			</div>
@@ -85,8 +85,8 @@ export default class Recipe extends React.Component {
 
 		let health = (
 			<Container textAlign='center'>
-				<List relaxed='very' vertical>
-					{Object.keys(this.state.health).map(healthStat => <List.Item content={<Statistic key={healthStat} label={healthStat} value={this.state.health[healthStat]} color={globalResources.color.primary} size='small' />} />)}
+				<List relaxed='very'>
+					{Object.keys(this.state.health).map(healthStat => <List.Item content={<Statistic key={healthStat+'stat'} label={healthStat} value={this.state.health[healthStat]} color={globalResources.color.primary} size='small' />} key={healthStat + 'item'} />)}
 				</List>
 			</Container>
 		);

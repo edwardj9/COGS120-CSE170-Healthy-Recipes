@@ -1,7 +1,8 @@
 {
-  "instructions": "Check 2 recipes to compare",
-  "compare": {
-    "clear": "Clear selection",
-    "confirm": "Compare recipes"
-  }
+	"instructions": "Check 2 recipes to compare",
+  "temp": "Click on recipe name to see more info",
+	"compare": {
+		"clear": "Clear selection",
+		"confirm": "Compare recipes"
+	}
 }

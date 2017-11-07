@@ -35,7 +35,9 @@ export default class Login extends React.Component {
 			</Form>
 		);
 
-		return <Actionbar content={content} />;
+		let help = resources.help;
+
+		return <Actionbar content={content} help={help} />;
 	}
 
 	setField(field, data) {

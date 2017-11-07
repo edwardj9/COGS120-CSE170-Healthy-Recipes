@@ -41,8 +41,6 @@ export default class Compare extends React.Component {
 
 		let help = resources.help;
 
-		this.renderCharts(this.state[recipeId].ingredients);		
-
 		return <Actionbar back content={content} help={help} signOut />;
 	}
 
@@ -54,19 +52,20 @@ export default class Compare extends React.Component {
 		);
 	}
 
-	renderCharts(ingredients){
-	return ( 
-	<div>
-		<pre id="spoonacular-ingredients" style="display:none">
-	{ingredients}
-	</pre>
-	<div id="spoonacular-nutrition-visualizer"></div>
-	<script type="text/javascript">
- 	var spoonacularServings = 1;
-	</script>
-	<script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-	<script type="text/javascript" src="https://spoonacular.com/cdn/spoonacular-1.6.min.js"></script>
-	</div>);
+	renderCharts(ingredients) {
+		return ( 
+			<div>
+				<pre id="spoonacular-ingredients" style={{ display: "none" }}>
+          {ingredients}
+				</pre>
+				<div id="spoonacular-nutrition-visualizer"></div>
+				<script type="text/javascript">
+			 		var spoonacularServings = 1;
+				</script>
+				<script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+				<script type="text/javascript" src="https://spoonacular.com/cdn/spoonacular-1.6.min.js"></script>
+			</div>
+		);
 	}
 
 
@@ -74,13 +73,13 @@ export default class Compare extends React.Component {
 		let headerSize = 'medium';
 
 		let healthStats = Object.keys(this.state).map(recipeId => (
-			<Grid.Column>
+			<Grid.Column key={recipeId}>
 				<Grid.Column>
 					<Header as='h2' color={globalResources.color.primary} content={this.state[recipeId].name} size={headerSize} />
 				</Grid.Column>
 
-				<List relaxed='very' vertical>
-					{Object.keys(this.state[recipeId].health).map(healthStat => <List.Item content={<Statistic key={healthStat} label={healthStat} value={this.state[recipeId].health[healthStat]} color={globalResources.color.primary} size='mini' />} />)}
+				<List relaxed='very'>
+					{Object.keys(this.state[recipeId].health).map(healthStat => <List.Item content={<Statistic key={healthStat + 'stat'} label={healthStat} value={this.state[recipeId].health[healthStat]} size='mini' />} key={healthStat + 'item'} />)}
 				</List>
 			</Grid.Column>
 		));

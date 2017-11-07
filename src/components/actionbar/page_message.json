@@ -1,23 +1,23 @@
 {
-  "back": {
-    "text": "Back"
-  },
-  "help": {
-    "text": "Help",
-    "modal": {
-      "button": {
-        "positive": "Got it"
-      }
-    }
-  },
-  "signOut": {
-    "text": "Sign out",
-    "modal": {
-      "text": "Are you sure you want to sign out?",
-      "button": {
-        "positive": "Sign out",
-        "negative": "Stay signed in"
-      }
-    }
-  }
+	"back": {
+		"text": "Back"
+	},
+	"help": {
+		"text": "Help",
+		"modal": {
+			"button": {
+				"positive": "Got it"
+			}
+		}
+	},
+	"signOut": {
+		"text": "Sign out",
+		"modal": {
+			"text": "Are you sure you want to sign out?",
+			"button": {
+				"positive": "Sign out",
+				"negative": "Stay signed in"
+			}
+		}
+	}
 }

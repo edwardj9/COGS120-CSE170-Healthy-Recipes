@@ -1,13 +1,12 @@
 {
-  "help": {
-    "title" : "Search help",
-    "instructions-1" : "Enter a words relating to the recipes you want to find!",
-    "instructions-2" : "Select from a variety of related recipes", 
-    "instructions-3" : "Click on two different recipes in order to compare their health information!",
-    "instructions-4" : "Or click on a recipe to view it and its health benefits"
-  },
-  "loader": {
-    "text": "Getting recipe information"
-  },
-  "title": "Showing \"#\" recipes relating to \"-\"'"
+	"help": [
+		"Enter a words relating to the recipes you want to find!",
+		"Select from a variety of related recipes",
+		"Click on two different recipes in order to compare their health information!",
+		"Or click on a recipe to view it and its health benefits"
+	],
+	"loader": {
+		"text": "Getting recipe information"
+	},
+	"title": "Showing \"#\" recipes relating to \"-\"'"
 }

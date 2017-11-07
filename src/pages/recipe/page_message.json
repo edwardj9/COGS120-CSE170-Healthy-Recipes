@@ -1,23 +1,22 @@
 {
-  "help": {
-   "title" : "Recipe help",
-   "instructions-1" : "Click on a the button 'Health Information' to view the Health Information of a recipe",
-   "instructions-2" : "Click back if you ever want to go back to a recipe",
-   "instructions-3" : "Click back again if you want to see other recipes or to compare two"
-   },
-  "health": {
-    "button": {
-      "text": "Health Information"
-    },
-    "title": "Health Information"
-  },
-  "ingredients": {
-    "title": "Ingredients"
-  },
-  "instructions": {
-    "title": "Instructions"
-  },
-  "loader": {
-    "text": "Getting recipe information"
-  }
+	"help": [
+		"Click on a the button 'Health Information' to view the Health Information of a recipe",
+		"Click back if you ever want to go back to a recipe",
+		"Click back again if you want to see other recipes or to compare two"
+	],
+	"health": {
+		"button": {
+			"text": "Health Information"
+		},
+		"title": "Health Information"
+	},
+	"ingredients": {
+		"title": "Ingredients"
+	},
+	"instructions": {
+		"title": "Instructions"
+	},
+	"loader": {
+		"text": "Getting recipe information"
+	}
 }

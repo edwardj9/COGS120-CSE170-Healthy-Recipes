@@ -16,12 +16,10 @@ export default class Actionbar extends React.Component {
 			var back = <Menu.Item content={resources.back.text} icon='arrow left' onClick={this.goBack.bind(this)} />;
 
 		if (this.props.signOut)
-			var signOut = (
-				<Modal actions={[resources.signOut.modal.button.negative, { color: globalResources.color.secondary, content: resources.signOut.modal.button.positive, onClick: () => this.signOut() }]} content={resources.signOut.modal.text} trigger={<Menu.Item content={resources.signOut.text} icon='sign out' />} />
-			);
+			var signOut = <Modal actions={[resources.signOut.modal.button.negative, { color: globalResources.color.secondary, content: resources.signOut.modal.button.positive, onClick: () => this.signOut() }]} content={resources.signOut.modal.text} trigger={<Menu.Item content={resources.signOut.text} icon='sign out' />} />;
 
 		if (this.props.help)
-			var help = <Modal actions={[{ color: globalResources.color.secondary, content: resources.help.modal.button.positive }]} content={this.props.help} trigger={<Menu.Item content={resources.help.text} icon='help circle' />} />;
+			var help = <Modal actions={[{ color: globalResources.color.secondary, content: resources.help.modal.button.positive }]} content={this.props.help.map(h => <p key={h}>{h}</p>)} trigger={<Menu.Item content={resources.help.text} icon='help circle' />} />;
 
 		if (this.props.title)
 			var title = (

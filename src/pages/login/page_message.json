@@ -1,20 +1,18 @@
 {
-  "password": {
-    "label": "Password",
-    "error": "Please enter password"
-  },
-  "submit": {
-    "text": "Login"
-  },
-  "username": {
-    "label": "Username",
-    "error": "Please enter username"
-  },
-  "help": {
-   "title" : "help",
-   "instructions-1" : "Log in to search recipes relating to keywords",
-   "instructions-2" : "After searching a key words a list of relevant recipes will appear",
-   "instructions-3" : "You can choose a recipe now or click on two to compare recipe health benefits",
-   
- } 
+	"password": {
+		"label": "Password",
+		"error": "Please enter password"
+	},
+	"submit": {
+		"text": "Login"
+	},
+	"username": {
+		"label": "Username",
+		"error": "Please enter username"
+	},
+	"help": [
+		"Log in to search recipes relating to keywords",
+		"After searching a key words a list of relevant recipes will appear",
+		"You can choose a recipe now or click on two to compare recipe health benefits"
+	]
 }
