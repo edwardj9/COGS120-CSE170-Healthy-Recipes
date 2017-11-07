@@ -22,7 +22,7 @@ export default class RecipeList extends React.Component {
 		let transitionDuration = 500;
 
 		let recipeItems = this.props.recipes.map(recipe => {
-			let isChecked = this.state.selected.indexOf(recipe) > -1;
+			let isChecked = this.state.selected.indexOf(recipe.id) > -1;
 			return <RecipeItem id={recipe.id} ref={recipe.id} key={recipe.id} isChecked={isChecked} disabledCheckbox={!isChecked && this.state.selected.length >= 2} 
 				name={recipe.title} time={recipe.readyInMinutes} onCheck={isChecked => this.onRecipeCheck(recipe.id, isChecked)} 
 					imgSrc={imageBase+recipe.id+imageRes+'.jpg'}/>;
