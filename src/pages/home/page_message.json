@@ -1,5 +1,12 @@
 {
-  "help": "Home help",
+  "help":{
+ "title": "Home help",
+ "instructions-1" : "Log in with a username and password",
+ "instructions-2" : "After logging in you can use keywords to search for related recipes",
+ "instructions-3" : "You can click on a recipe name to view on the recipe or you can click on two to compare their health benefits",
+ "instrcutions-4" : "Click back if you ever change your mind!",
+ "instructions-5" : "You can view the health information of a recipe from the recipe page as well!"
+ },
   "logo": {
     "src": "https://cdn.pixabay.com/photo/2017/02/17/17/33/food-2074638_1280.png"
   }
