@@ -22,6 +22,7 @@ export default class Compare extends React.Component {
 				let stateUpdate = {};
 				stateUpdate[recipeId] = {
 					name: recipeInfo.title,
+					ingredients: recipeInfo.extendedIngredients.map(ingredient => [ingredient.amount, ingredient.unitLong, ingredient.name].join(' ')),
 					health: recipeInfo.nutrition.nutrients.reduce((health, nutrient) => {
 						health[nutrient.title] = [nutrient.amount, nutrient.unit].join(' ');
 						return health;
@@ -40,6 +41,8 @@ export default class Compare extends React.Component {
 
 		let help = resources.help;
 
+		this.renderCharts(this.state[recipeId].ingredients);		
+
 		return <Actionbar back content={content} help={help} signOut />;
 	}
 
@@ -50,6 +53,22 @@ export default class Compare extends React.Component {
 			</Container>
 		);
 	}
+
+	renderCharts(ingredients){
+	return ( 
+	<div>
+		<pre id="spoonacular-ingredients" style="display:none">
+	{ingredients}
+	</pre>
+	<div id="spoonacular-nutrition-visualizer"></div>
+	<script type="text/javascript">
+ 	var spoonacularServings = 1;
+	</script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="https://spoonacular.com/cdn/spoonacular-1.6.min.js"></script>
+	</div>);
+	}
+
 
 	renderHealth() {
 		let headerSize = 'medium';

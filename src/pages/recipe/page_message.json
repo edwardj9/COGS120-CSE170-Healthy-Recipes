@@ -1,5 +1,8 @@
 {
-  "help": "Recipe help",
+  "help": {
+   "title" : "Recipe help",
+   "instructions-1" : "
+   },
   "health": {
     "button": {
       "text": "Health Information"
