@@ -13,7 +13,7 @@ export default class Home extends React.Component {
 			<div>
 				<div style={{ margin: '20%' }} />
 
-				<Image shape='circular' size='small' centered src={resources.logo.src} />
+				<Image shape='circular' size='small' centered src={require('../../global/icon.png')} />
 
 				<div style={{ margin: '5%' }} />
 
