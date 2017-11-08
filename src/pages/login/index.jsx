@@ -48,7 +48,7 @@ export default class Login extends React.Component {
 
 	login() {
 		cookies.set(globalResources.cookies.loggedIn, 1);
-		window.location.href = '/';
+		window.location.href = '/home';
 	}
 
 }

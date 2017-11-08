@@ -17,9 +17,9 @@ export default class App extends React.Component {
 	render() {
 
 		let routeMap = {
-			'/': Home,
+			'/': Login,
 			'/compare/:id1/:id2': Compare,
-			'/login': Login,
+			'/home': Home,
 			'/recipe/:id': Recipe,
 			'/search': Search
 		};
@@ -33,12 +33,12 @@ export default class App extends React.Component {
 
 	renderPage(component, props, path) {
 		let loggedIn = cookies.get(globalResources.cookies.loggedIn);
-		let isLoginScreen = path === '/login';
+		let isLoginScreen = path === '/';
 
 		if (!loggedIn && !isLoginScreen)
-			window.location.href = '/login';
-		else if (loggedIn && isLoginScreen)
 			window.location.href = '/';
+		else if (loggedIn && isLoginScreen)
+			window.location.href = '/home';
 		else
 			return React.createElement(component, Object.assign(props, queryString.parse(props.location.search)))
 	}
