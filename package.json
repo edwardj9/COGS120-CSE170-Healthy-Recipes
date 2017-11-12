@@ -1,13 +1,12 @@
 {
-  "name": "heroku-cra-node",
+  "name": "cogs120-cse170-healthy-recipes",
   "version": "1.0.0",
-  "description": "How to use create-react-app with a custom Node API on Heroku",
   "engines": {
     "node": "6.11.x"
   },
   "scripts": {
     "start": "node server",
-    "heroku-postbuild": "cd react-ui/ && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
+    "heroku-postbuild": "cd client/ && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "cacheDirectories": [
     "node_modules",
@@ -15,10 +14,6 @@
   ],
   "dependencies": {
     "express": "^4.14.1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mars/heroku-cra-node.git"
   },
   "keywords": [
     "node",
