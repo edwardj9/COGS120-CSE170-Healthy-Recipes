@@ -53,6 +53,15 @@ export default class Recipe extends React.Component {
 		// };
 
 		// xhr.send();
+		
+		let xhr = new XMLHttpRequest();
+
+		xhr.open('GET', '/api/1.0/food/test');
+		xhr.onload = () => {
+			console.log(xhr.response);
+		};
+
+		xhr.send();
 	}
 
 	render() {

@@ -14,8 +14,7 @@ export default class Search extends React.Component {
 		super();
 
 		this.resultSize = 10;
-    	this.url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?instructionsRequired=true";
-
+    this.url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?instructionsRequired=true";
 
 		this.state = {
 			recipes: [],
