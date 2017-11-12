@@ -2,5 +2,43 @@
 	"search": {
 		"placeholder": "Search for recipes",
 		"button": "Search for recipes"
-	}
+	},
+  "options": {
+    "button": {
+      "content": "Advanced Options"
+    },
+    "diet": {
+      "label": "Diet Preferences",
+      "placeholder": "None",
+      "values": {
+        " ": "None",
+        "pescetarian": "Pescetarian",
+        "lacto vegetarian": "Lacto Vegetarian",
+        "ovo vegetarian": "Ovo Vegetarian",
+        "vegan": "Vegan",
+        "vegetarian": "Vegetarian"
+      }
+    },
+    "excludeIngredients": {
+      "label": "Exlude Ingredients",
+      "placeholder": "Enter ingredients separated by commas"
+    },
+    "intolerances": {
+      "label": "Allergies",
+      "placeholder": "None",
+      "values": {
+        "dairy": "Dairy",
+        "egg": "Egg",
+        "gluten": "Gluten",
+        "peanut": "Peanut",
+        "sesame": "Sesame",
+        "seafood": "Seafood",
+        "shellfish": "Shellfish",
+        "soy": "Soy",
+        "sulfite": "Sulfite",
+        "tree nut": "Tree Nut",
+        "wheat": "Wheat"
+      }
+    }
+  }
 }

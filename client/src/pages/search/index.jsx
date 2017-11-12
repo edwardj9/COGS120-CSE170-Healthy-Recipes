@@ -7,14 +7,13 @@ import Searchbar from '../../components/searchbar/index';
 import React from 'react';
 import { Container, Loader } from 'semantic-ui-react';
 
+const queryString = require('query-string');
+
 export default class Search extends React.Component {
 
     
 	constructor() {
 		super();
-
-		this.resultSize = 10;
-    this.url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?instructionsRequired=true";
 
 		this.state = {
 			recipes: [],
@@ -23,16 +22,24 @@ export default class Search extends React.Component {
 	}
 
 
-	componentWillMount(){
-		var xhr = new XMLHttpRequest();
-		xhr.open("GET", this.url+"&number="+this.resultSize+"&query="+this.props.query, true);
-		console.log(process.env.API_KEY);
+	componentWillMount() {
+		let qs = {
+			number: 100,
+			query: this.props.query,
+			diet: this.props.diet,
+			excludeIngredients: this.props.excludeIngredients,
+			instructionsRequired: true,
+			intolerances: this.props.intolerances
+		};
+
+		let xhr = new XMLHttpRequest();
+		xhr.open("GET", "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?" + queryString.stringify(qs, { encode: false }));
 		xhr.setRequestHeader("X-Mashape-Key", process.env.API_KEY);
 		xhr.setRequestHeader("X-Mashape-Host", "spoonacular-recipe-food-nutrition-v1.p.mashape.com");
 		xhr.onload = function(e){
 			if (xhr.readyState === 4){
 				if (xhr.status === 200){
-					var response = JSON.parse(xhr.response);
+					let response = JSON.parse(xhr.response);
 					this.setState({
 						recipes: response.results,
 						resultCount: response.number,

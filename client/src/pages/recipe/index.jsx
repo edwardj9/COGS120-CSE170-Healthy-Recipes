@@ -56,12 +56,15 @@ export default class Recipe extends React.Component {
 		
 		let xhr = new XMLHttpRequest();
 
-		xhr.open('GET', '/api/1.0/food/test');
+		xhr.open('POST', '/api/1.0/food/test');
+		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.onload = () => {
 			console.log(xhr.response);
 		};
 
-		xhr.send();
+		xhr.send(JSON.stringify({
+			test: 'test'
+		}));
 	}
 
 	render() {
