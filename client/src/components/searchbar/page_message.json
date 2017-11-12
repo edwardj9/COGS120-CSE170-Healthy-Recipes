@@ -20,7 +20,7 @@
       }
     },
     "excludeIngredients": {
-      "label": "Exlude Ingredients",
+      "label": "Exclude Ingredients",
       "placeholder": "Enter ingredients separated by commas"
     },
     "intolerances": {
