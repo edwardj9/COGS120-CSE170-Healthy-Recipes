@@ -7,7 +7,7 @@ const MAX_CALLS = 25;
 const baseOptions = {
 	baseUrl: 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com',
 	headers: {
-		'X-Mashape-Key': '',
+		'X-Mashape-Key': process.env.API_KEY,
 		'X-Mashape-Host': 'spoonacular-recipe-food-nutrition-v1.p.mashape.com'
 	},
 };
@@ -58,7 +58,7 @@ module.exports = function(app) {
 				return;
 			}
 
-			res.status(500).send();
+			res.json(JSON.parse(body));
 		});
 	});
 
@@ -99,7 +99,7 @@ module.exports = function(app) {
 				return;
 			}
 
-			res.status(500).send();
+			res.json(JSON.parse(body));
 		});
 	});
 
