@@ -32,6 +32,7 @@ export default class Request extends React.Component {
 
 		xhr.open('GET', url + '?' + queryString.stringify(qs, { encode: false }));
 		xhr.onload = () => {
+			console.log(JSON.parse(xhr.response))
 			if (xhr.status >= 200 && xhr.status < 300)
 				callback(undefined, xhr.response);
 			else
