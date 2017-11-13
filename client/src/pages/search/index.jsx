@@ -2,6 +2,7 @@ import resources from './page_message.json';
 
 import Actionbar from '../../components/actionbar/index';
 import RecipeList from '../../components/recipelist/index';
+import Request from '../../components/request/index';
 import Searchbar from '../../components/searchbar/index';
 
 import React from 'react';
@@ -21,38 +22,6 @@ export default class Search extends React.Component {
 		};
 	}
 
-
-	componentWillMount() {
-		let qs = {
-			number: 100,
-			query: this.props.query,
-			diet: this.props.diet,
-			excludeIngredients: this.props.excludeIngredients,
-			instructionsRequired: true,
-			intolerances: this.props.intolerances
-		};
-
-		let xhr = new XMLHttpRequest();
-		xhr.open("GET", "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?" + queryString.stringify(qs, { encode: false }));
-		xhr.setRequestHeader("X-Mashape-Key", process.env.API_KEY);
-		xhr.setRequestHeader("X-Mashape-Host", "spoonacular-recipe-food-nutrition-v1.p.mashape.com");
-		xhr.onload = function(e){
-			if (xhr.readyState === 4){
-				if (xhr.status === 200){
-					let response = JSON.parse(xhr.response);
-					this.setState({
-						recipes: response.results,
-						resultCount: response.number,
-					});
-				} else {
-					console.error(xhr.statusText);
-				}
-			}
-		}.bind(this);
-		xhr.send();
-	}
-
-
 	render() {
 		let recipeList;
 		if (!!Object.keys(this.state.recipes).length)
@@ -71,6 +40,8 @@ export default class Search extends React.Component {
 				<div style={{ margin: '5%' }} />
 
 				{recipeList}
+
+				<Request ref='request' />
 			</div>
 		);
 
@@ -80,6 +51,28 @@ export default class Search extends React.Component {
 		title = title.replace('#', this.state.resultCount);
 
 		return <Actionbar back content={content} help={help} signOut title={title} />;
+	}
+
+	componentDidMount() {
+		let qs = {
+			number: 100,
+			query: this.props.query,
+			diet: this.props.diet,
+			excludeIngredients: this.props.excludeIngredients,
+			instructionsRequired: true,
+			intolerances: this.props.intolerances
+		};
+
+		this.refs.request.get('/api/1.0/recipe/search', qs, (err, data) => {
+			if (err)
+				return;
+
+			let recipeInfo = JSON.parse(data);
+			this.setState({
+				recipes: recipeInfo.results,
+				resultCount: recipeInfo.number,
+			});
+		});
 	}
 
 }

@@ -2,5 +2,8 @@
 	"help": [
 		"On the compare page you can view the health aspects of two recipes side by side",
 		"In order to change which recipe you are viewing, click back, uncheck a recipe, check a different one and click the 'Compare two recipes' button below"
-	]
+	],
+  "loader": {
+    "text": "Getting recipe information"
+  }
 }

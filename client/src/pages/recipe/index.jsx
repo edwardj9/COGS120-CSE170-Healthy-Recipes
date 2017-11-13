@@ -2,6 +2,7 @@ import resources from './page_message.json';
 import globalResources from '../../global/page_message.json';
 
 import Actionbar from '../../components/actionbar/index';
+import Request from '../../components/request/index';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -20,16 +21,28 @@ export default class Recipe extends React.Component {
 		};
 	}
 
-	componentWillMount() {
-		// let xhr = new XMLHttpRequest();
+	render() {
+		let content = (
+			<div>
+				{!!this.state.name ? this.renderRecipe() : this.renderLoading()}
 
-		// xhr.open('GET', 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/' + this.props.match.params.id + '/information?includeNutrition=true');
-		// xhr.setRequestHeader("X-Mashape-Key", process.env.API_KEY);
-		// xhr.setRequestHeader("X-Mashape-Host", "spoonacular-recipe-food-nutrition-v1.p.mashape.com");
-		// xhr.onload = () => {
-		// 	let recipeInfo = JSON.parse(xhr.response);
-			let recipeInfo = require('../../test_data/recipe_info/' + this.props.match.params.id);
+				<Request ref='request' />
+			</div>
+		);
 
+		let help = resources.help;
+
+		let title = this.state.name;
+
+		return <Actionbar back content={content} help={help} signOut title={title} />;
+	}
+
+	componentDidMount() {
+		this.refs.request.get('/api/1.0/recipe/' + this.props.match.params.id, {}, (err, data) => {
+			if (err)
+				return;
+
+			let recipeInfo = JSON.parse(data);
 			if (!recipeInfo.analyzedInstructions.length)
 				recipeInfo.analyzedInstructions = [{
 					name: '',
@@ -50,31 +63,7 @@ export default class Recipe extends React.Component {
 					return health;
 				}, {})
 			});
-		// };
-
-		// xhr.send();
-		
-		let xhr = new XMLHttpRequest();
-
-		xhr.open('POST', '/api/1.0/food/test');
-		xhr.setRequestHeader("Content-Type", "application/json");
-		xhr.onload = () => {
-			console.log(xhr.response);
-		};
-
-		xhr.send(JSON.stringify({
-			test: 'test'
-		}));
-	}
-
-	render() {
-		let content = !!this.state.name ? this.renderRecipe() : this.renderLoading();
-
-		let help = resources.help;
-
-		let title = this.state.name;
-
-		return <Actionbar back content={content} help={help} signOut title={title} />;
+		});
 	}
 
 	renderLoading() {

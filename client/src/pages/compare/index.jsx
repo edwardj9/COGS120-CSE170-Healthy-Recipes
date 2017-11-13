@@ -2,22 +2,40 @@ import resources from './page_message.json';
 import globalResources from '../../global/page_message.json';
 
 import Actionbar from '../../components/actionbar/index';
+import Request from '../../components/request/index';
 
 import React from 'react';
 import { Container, Grid, Header, List, Loader, Statistic } from 'semantic-ui-react';
 
 export default class Compare extends React.Component {
 
-	componentWillMount() {
-		[this.props.match.params.id1, this.props.match.params.id2].forEach(recipeId => {
-			// let xhr = new XMLHttpRequest();
+	constructor() {
+		super();
 
-			// xhr.open('GET', 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/' + recipeId + '/information?includeNutrition=true');
-			// xhr.setRequestHeader("X-Mashape-Key", process.env.API_KEY);
-			// xhr.setRequestHeader("X-Mashape-Host", "spoonacular-recipe-food-nutrition-v1.p.mashape.com");
-			// xhr.onload = () => {
-			//	let recipeInfo = JSON.parse(xhr.response);
-				let recipeInfo = require('../../test_data/recipe_info/' + recipeId);
+		this.state = {};
+	}
+
+	render() {
+		let content = (
+			<div>
+				{(Object.keys(this.state).length >= 2) ? this.renderHealth() : this.renderLoading()}
+
+				<Request ref='request' />
+			</div>
+		);
+
+		let help = resources.help;
+
+		return <Actionbar back content={content} help={help} signOut />;
+	}
+
+	componentDidMount() {
+		[this.props.match.params.id1, this.props.match.params.id2].forEach(recipeId => {
+			this.refs.request.get('/api/1.0/recipe/' + recipeId, {}, (err, data) => {
+				if (err)
+					return;
+
+				let recipeInfo = JSON.parse(data);
 
 				let stateUpdate = {};
 				stateUpdate[recipeId] = {
@@ -30,18 +48,8 @@ export default class Compare extends React.Component {
 				};
 
 				this.setState(stateUpdate);
-		//	};
-
-		//	xhr.send();
+			});
 		});
-	}
-
-	render() {
-		let content = (Object.keys(this.state).length >= 2) ? this.renderHealth() : this.renderLoading();
-
-		let help = resources.help;
-
-		return <Actionbar back content={content} help={help} signOut />;
 	}
 
 	renderLoading() {
@@ -67,7 +75,6 @@ export default class Compare extends React.Component {
 			</div>
 		);
 	}
-
 
 	renderHealth() {
 		let headerSize = 'medium';
