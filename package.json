@@ -1,28 +1,28 @@
 {
-  "name": "cogs120-cse170-healthy-recipes",
-  "version": "1.0.0",
-  "engines": {
-    "node": "6.11.x"
-  },
-  "scripts": {
-    "start": "node server",
-    "heroku-postbuild": "cd client/ && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
-  },
-  "cacheDirectories": [
-    "node_modules",
-    "client/node_modules"
-  ],
-  "dependencies": {
-    "body-parser": "^1.18.2",
-    "express": "^4.14.1",
-    "request": "^2.83.0"
-  },
-  "keywords": [
-    "node",
-    "heroku",
-    "create-react-app",
-    "react"
-  ],
-  "license": "MIT",
-  "devDependencies": {}
+	"name": "cogs120-cse170-healthy-recipes",
+	"version": "1.0.0",
+	"engines": {
+		"node": "6.11.x"
+	},
+	"scripts": {
+		"start": "node server",
+		"heroku-postbuild": "cd client/ && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
+	},
+	"cacheDirectories": [
+		"node_modules",
+		"client/node_modules"
+	],
+	"dependencies": {
+		"body-parser": "^1.18.2",
+		"express": "^4.14.1",
+		"request": "^2.83.0"
+	},
+	"keywords": [
+		"node",
+		"heroku",
+		"create-react-app",
+		"react"
+	],
+	"license": "MIT",
+	"devDependencies": {}
 }
