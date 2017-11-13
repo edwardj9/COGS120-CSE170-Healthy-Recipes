@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const request = require('request');
 
-const MAX_CALLS = 2;
+const MAX_CALLS = 25;
 
 const baseOptions = {
 	baseUrl: 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com',
