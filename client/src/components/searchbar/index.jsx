@@ -93,11 +93,13 @@ export default class Searchbar extends React.Component {
 	};
 
 	search() {
-		let qs = JSON.parse(JSON.stringify(this.state));
-		delete qs.loading;
-		delete qs.showOptions;
+		if (this.state.query.length) {
+			let qs = JSON.parse(JSON.stringify(this.state));
+			delete qs.loading;
+			delete qs.showOptions;
 
-		window.location.href = '/search?' + queryString.stringify(qs, { encode: false });
+			window.location.href = '/search?' + queryString.stringify(qs, { encode: false });
+		}
 	}
 
 }

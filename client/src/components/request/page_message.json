@@ -1,6 +1,6 @@
 {
 	"modal": {
-    "text": "We have reached our limit of 25 free API calls/day. While we wait for an education extension, we will return static results until the next day.",
+    "text": "We have reached our limit for free API calls/day. While we wait for an education extension, we will return static results until the next day.",
     "button": {
       "positive": "Got it"
     }
