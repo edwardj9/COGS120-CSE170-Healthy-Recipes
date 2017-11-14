@@ -3,7 +3,7 @@ import globalResources from '../../global/page_message.json';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Card, Container, Divider, Header, Label, List, Menu, Segment, Transition } from 'semantic-ui-react';
+import { Button, Divider, Grid, Header, Image, List, Menu, Segment, Transition } from 'semantic-ui-react';
 
 export default class RecipeList extends React.Component {
 
@@ -28,7 +28,7 @@ export default class RecipeList extends React.Component {
 				<Header as='p' color={globalResources.color.primary} content={resources.instructions} size='tiny' textAlign='center' />
 				<Divider clearing hidden />
 
-				<List verticalAlign='middle' relaxed>
+				<List divided relaxed verticalAlign='middle'>
 					{recipeItems}
 				</List>
 
@@ -80,13 +80,26 @@ class RecipeItem extends React.Component {
 
 	render() {
 		return (
-			<List.Item>
-				<Card fluid header={this.props.name} image={this.props.imgSrc} meta={'Ready in ' + this.props.time + ' minutes'} onClick={this.goToRecipe.bind(this)} raised />
-				<Container textAlign='right'>
-					<Label as='a' color={this.props.isChecked ? globalResources.color.secondary : globalResources.color.primary} content={this.props.disabledCheckbox ? resources.checkbox.negative : resources.checkbox.positive} onClick={() => this.props.disabledCheckbox ? undefined : this.props.onCheck(!this.props.isChecked)} pointing style={{ margin: '0px'}} />
-				</Container>
+			<List.Item ref='item'>
+				<Image avatar id={this.props.id + 'image'} onClick={this.goToRecipe.bind(this)} src={this.props.imgSrc} size='tiny' />
+				<List.Content description={'Ready in ' + this.props.time + ' minutes'} header={this.props.name} id={this.props.id + 'title'} onClick={this.goToRecipe.bind(this)} />
+				
+				<Grid columns={2} style={{ marginTop: '0.01%' }}>
+					<Grid.Row>
+						<Grid.Column>
+							<Button basic compact content={resources.view.text} fluid onClick={this.goToRecipe.bind(this)} />
+						</Grid.Column>
+						<Grid.Column>
+							<Button basic={!this.props.isChecked} color={this.props.isChecked ? globalResources.color.secondary : globalResources.color.primary} compact content={this.props.disabledCheckbox ? resources.checkbox.negative : (this.props.isChecked ? resources.checkbox.confirm : resources.checkbox.positive)} disabled={this.props.disabledCheckbox} fluid onClick={() => this.props.onCheck(!this.props.isChecked)} />
+						</Grid.Column>
+					</Grid.Row>
+				</Grid>
 			</List.Item>
 		);
+	}
+
+	componentDidMount() {
+		document.getElementById(this.props.id + 'title').style.width = (ReactDOM.findDOMNode(this.refs.item).offsetWidth - document.getElementById(this.props.id + 'image').offsetWidth) + 'px';
 	}
 
 	goToRecipe() {

@@ -13,7 +13,7 @@ export default class Searchbar extends React.Component {
 
 		this.state = {
 			query: '',
-			diet: '',
+			diet: ' ',
 			excludeIngredients: '',
 			intolerances: '',
 			loading: false,
@@ -51,9 +51,9 @@ export default class Searchbar extends React.Component {
 
 					<Transition animation='fade up' duration={500} transitionOnMount unmountOnHide visible={this.state.showOptions}>
 						<div>
-							<Form.Dropdown defaultValue=' ' fluid label={resources.options.diet.label} options={diet} onChange={this.setDiet.bind(this)} selection />
-							<Form.Input fluid label={resources.options.excludeIngredients.label} onChange={this.setExcludeIngredients.bind(this)} placeholder={resources.options.excludeIngredients.placeholder} />
-							<Form.Dropdown fluid label={resources.options.intolerances.label} multiple options={intolerances} onChange={this.setIntolerances.bind(this)} placeholder={resources.options.intolerances.placeholder} selection />
+							<Form.Dropdown defaultValue={this.state.diet} fluid label={resources.options.diet.label} options={diet} onChange={this.setDiet.bind(this)} selection />
+							<Form.Input defaultValue={this.state.excludeIngredients} fluid label={resources.options.excludeIngredients.label} onChange={this.setExcludeIngredients.bind(this)} placeholder={resources.options.excludeIngredients.placeholder} />
+							<Form.Dropdown defaultValue={this.state.intolerances} fluid label={resources.options.intolerances.label} multiple options={intolerances} onChange={this.setIntolerances.bind(this)} placeholder={resources.options.intolerances.placeholder} selection />
 						</div>
 					</Transition>
 				</Form>
@@ -70,19 +70,19 @@ export default class Searchbar extends React.Component {
 
 	setDiet(e, d) {
 		this.setState({
-			diet: d.value.trim()
+			diet: d.value
 		});
 	}
 
 	setExcludeIngredients(e, d) {
 		this.setState({
-			excludeIngredients: d.value.split(',').map(ingredient => ingredient.trim()).join(',')
+			excludeIngredients: d.value
 		});
 	}
 
 	setIntolerances(e, d) {
 		this.setState({
-			intolerances: d.value.join(',')
+			intolerances: d.value
 		});
 	}
 
@@ -94,9 +94,12 @@ export default class Searchbar extends React.Component {
 
 	search() {
 		if (this.state.query.length) {
-			let qs = JSON.parse(JSON.stringify(this.state));
-			delete qs.loading;
-			delete qs.showOptions;
+			let qs = {
+				query: this.state.query,
+				diet: this.state.diet.trim(),
+				excludeIngredients: this.state.excludeIngredients.split(',').map(ingredient => ingredient.trim()).join(','),
+				intolerances: this.state.intolerances.join(',')
+			};
 
 			window.location.href = '/search?' + queryString.stringify(qs, { encode: false });
 		}

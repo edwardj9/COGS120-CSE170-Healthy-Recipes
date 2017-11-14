@@ -1,11 +1,15 @@
 {
   "checkbox": {
+    "confirm": "Comparing",
     "positive": "Compare",
-    "negative": "Cannot check any more recipes"
+    "negative": "Disabled"
   },
   "compare": {
     "clear": "Clear selection",
     "confirm": "Compare recipes"
   },
-  "instructions": "Choose 2 recipes to compare health info"
+  "instructions": "Choose 2 recipes to compare health info",
+  "view": {
+    "text": "View Recipe"
+  }
 }

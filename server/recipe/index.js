@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const request = require('request');
 
-const MAX_CALLS = 25;
+const MAX_CALLS = 4000;
 
 const baseOptions = {
 	baseUrl: 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com',
@@ -14,7 +14,7 @@ const baseOptions = {
 
 const getRecipeImageUrl = recipeId => {
 	let imageBaseUrl = 'https://spoonacular.com/recipeImages/';
-	let imageRes = '556x370';
+	let imageRes = '90x90';
 
 	return imageBaseUrl + recipeId + '-' + imageRes + '.jpg';
 };
