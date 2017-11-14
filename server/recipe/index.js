@@ -75,7 +75,9 @@ module.exports = function(app) {
 
 				let recipesList = fs.readdirSync(recipesDir);
 
-				recipePath = path.join(recipesDir, recipesList[randInt(0, recipesList.length)]);
+				let getRandomRecipe = () => path.join(recipesDir, recipesList[randInt(0, recipesList.length)]);
+
+				while ((recipePath = getRandomRecipe()) === path.join(recipesDir, 'list.json'));
 			}
 
 			res.status(500).json(require(recipePath));

@@ -8,8 +8,6 @@ import Searchbar from '../../components/searchbar/index';
 import React from 'react';
 import { Container, Loader } from 'semantic-ui-react';
 
-const queryString = require('query-string');
-
 export default class Search extends React.Component {
 
     

@@ -1,11 +1,10 @@
 import resources from './page_message.json';
-import globalResources from '../../global/page_message.json';
 
 import Actionbar from '../../components/actionbar/index';
 import Request from '../../components/request/index';
 
 import React from 'react';
-import { Container, Grid, Header, List, Loader, Statistic } from 'semantic-ui-react';
+import { Container, Divider, Grid, Header, Loader, Progress } from 'semantic-ui-react';
 
 export default class Compare extends React.Component {
 
@@ -40,9 +39,11 @@ export default class Compare extends React.Component {
 				let stateUpdate = {};
 				stateUpdate[recipeId] = {
 					name: recipeInfo.title,
-					ingredients: recipeInfo.extendedIngredients.map(ingredient => [ingredient.amount, ingredient.unitLong, ingredient.name].join(' ')),
 					health: recipeInfo.nutrition.nutrients.reduce((health, nutrient) => {
-						health[nutrient.title] = [nutrient.amount, nutrient.unit].join(' ');
+						health[nutrient.title + ' (' + nutrient.unit + ')'] = {
+							amount: Math.round(nutrient.amount),
+							total: Math.round(nutrient.amount / (nutrient.percentOfDailyNeeds ? nutrient.percentOfDailyNeeds / 100 : 1))
+						}
 						return health;
 					}, {})
 				};
@@ -79,23 +80,70 @@ export default class Compare extends React.Component {
 	renderHealth() {
 		let headerSize = 'medium';
 
-		let healthStats = Object.keys(this.state).map(recipeId => (
-			<Grid.Column key={recipeId}>
-				<Grid.Column>
-					<Header as='h2' color={globalResources.color.primary} content={this.state[recipeId].name} size={headerSize} />
-				</Grid.Column>
+		let colors = ['orange', 'blue'];
+		let indices = Object.keys(this.state);
 
-				<List relaxed='very'>
-					{Object.keys(this.state[recipeId].health).map(healthStat => <List.Item content={<Statistic key={healthStat + 'stat'} label={healthStat} value={this.state[recipeId].health[healthStat]} size='mini' />} key={healthStat + 'item'} />)}
-				</List>
+		let totals = {};
+		Object.keys(this.state).forEach(recipeId => {
+			Object.keys(this.state[recipeId].health).forEach(healthKey => {
+				totals[healthKey] = this.state[recipeId].health[healthKey].total;
+			});
+		});
+
+		let headers = Object.keys(this.state).map(recipeId => (
+			<Grid.Column key={recipeId + 'col'}>
+				<Header as='h2' color={colors[indices.indexOf(recipeId)]} content={this.state[recipeId].name} key={recipeId} size={headerSize} />
 			</Grid.Column>
 		));
 
+		let healthNames = [];
+		Object.keys(this.state).forEach(recipeId => {
+			Object.keys(this.state[recipeId].health).forEach(healthKey => {
+				if (healthNames.indexOf(healthKey) < 0)
+					healthNames.push(healthKey);
+			});
+		});
+
+		let healthStats = healthNames.map(healthName => [
+			<Divider fitted key={healthName + 'divider'} />
+			,
+			<Grid.Row key={healthName + 'row'}>
+				<Grid.Column divided key={healthName + 'col'}>
+					<Header content={healthName} key ={healthName} />
+				</Grid.Column>
+			</Grid.Row>
+			,
+			Object.keys(this.state).map(recipeId => {
+				let key = healthName + recipeId;
+
+				let marginVertical = 4;
+				let headerMarginVertical = marginVertical + '%';
+				let progressMarginVertical = '-' + headerMarginVertical;
+
+				let amount = !!this.state[recipeId].health[healthName] ? this.state[recipeId].health[healthName].amount : 0;
+				let total = totals[healthName];
+
+				let header = <Header as='p' color={colors[indices.indexOf(recipeId)]} content={ amount ? (amount + ' / ' + total) : resources.health.noinfo} key={key + 'header'} style={(indices.indexOf(recipeId) === 0) ? { marginTop: '0px', marginBottom: headerMarginVertical } : { marginTop: headerMarginVertical, marginBottom: '0px' }} />;
+
+				return (
+					<Grid.Row key={key + 'row'}>
+						<Grid.Column key={key+ 'col'}>
+							{(indices.indexOf(recipeId) === 0) ? header : undefined}
+							<Progress style={{ marginTop: progressMarginVertical, marginBottom: progressMarginVertical }} color={colors[indices.indexOf(recipeId)]} disabled={!amount} key={key + 'progress'} percent={amount ? amount / total * 100 : 0} />
+							{(indices.indexOf(recipeId) === 0) ? undefined : header}
+						</Grid.Column>
+					</Grid.Row>
+				);
+			})
+		]);
+
 		let content = (
-			<Grid columns='equal' divided textAlign='center'>
+			<Grid columns='equal' textAlign='center'>
 				<Grid.Row>
-					{healthStats}
+					{headers}
 				</Grid.Row>
+
+				{healthStats}
 			</Grid>
 		);
 
