@@ -110,39 +110,47 @@ export default class Compare extends React.Component {
 			});
 		});
 
-		let healthStats = Object.keys(healthNames).map(healthName => [
-			<Divider fitted key={healthName + 'divider'} />
-			,
-			<Grid.Row key={healthName + 'row'}>
-				<Grid.Column divided key={healthName + 'col'}>
-					<Header content={healthName} key ={healthName} />
-				</Grid.Column>
-			</Grid.Row>
-			,
-			Object.keys(this.state).map(recipeId => {
-				let key = healthName + recipeId;
+		let healthStats = Object.keys(healthNames).map(healthName => {
+			let healthInfoExists = Object.keys(this.state)
+				.map(recipeId => !!this.state[recipeId].health[healthName] ? this.state[recipeId].health[healthName].amount : false)
+				.filter(hasHealthInfo => hasHealthInfo);
 
-				let marginVertical = 4;
-				let headerMarginVertical = marginVertical + '%';
-				let progressMarginVertical = '-' + headerMarginVertical;
-
-				let amount = !!this.state[recipeId].health[healthName] ? this.state[recipeId].health[healthName].amount : 0;
-				let total = totals[healthName];
-				let unit = amount ? this.state[recipeId].health[healthName].unit : undefined
-
-				let header = <Header as='p' color={colors[indices.indexOf(recipeId)]} content={amount ? (amount + ' / ' + total) + ' ' + unit + ' of daily need': resources.health.noinfo} key={key + 'header'} style={(indices.indexOf(recipeId) === 0) ? { marginTop: '0px', marginBottom: headerMarginVertical } : { marginTop: headerMarginVertical, marginBottom: '0px' }} />;
-
-				return (
-					<Grid.Row key={key + 'row'}>
-						<Grid.Column key={key+ 'col'}>
-							{(indices.indexOf(recipeId) === 0) ? header : undefined}
-							<Progress style={{ marginTop: progressMarginVertical, marginBottom: progressMarginVertical }} color={colors[indices.indexOf(recipeId)]} disabled={!amount} key={key + 'progress'} percent={amount ? amount / total * 100 : 0} />
-							{(indices.indexOf(recipeId) === 0) ? undefined : header}
+			if (healthInfoExists.length)
+				return [
+					<Divider fitted key={healthName + 'divider'} />
+					,
+					<Grid.Row key={healthName + 'header row'}>
+						<Grid.Column key={healthName + 'header col'}>
+							<Header content={healthName} key ={healthName} />
 						</Grid.Column>
 					</Grid.Row>
-				);
-			})
-		]);
+					,
+					<Grid.Row key={healthName + 'stat row'}>
+						<Grid.Column key={healthName + 'stat col'}>
+						{
+							Object.keys(this.state).map(recipeId => {
+								let key = healthName + recipeId;
+								let marginVertical = '0.5%';
+
+								let amount = !!this.state[recipeId].health[healthName] ? this.state[recipeId].health[healthName].amount : 0;
+								let total = totals[healthName];
+								let unit = amount ? this.state[recipeId].health[healthName].unit : undefined
+
+								let header = <Header as='p' color={colors[indices.indexOf(recipeId)]} content={amount ? (amount + ' / ' + total) + ' ' + unit + ' of daily need': resources.health.noinfo} key={key + 'header'} style={{ margin: '0px' }} />;
+
+								return [
+									(indices.indexOf(recipeId) === 0) ? header : undefined,
+									<Progress color={colors[indices.indexOf(recipeId)]} disabled={!amount} key={key + 'progress'} percent={amount ? amount / total * 100 : 0} style={{ marginTop: marginVertical, marginBottom: marginVertical }} />,
+									(indices.indexOf(recipeId) === 0) ? undefined : header
+								];
+							})
+						}
+						</Grid.Column>
+					</Grid.Row>
+				];
+
+			return undefined;
+		});
 
 		let content = (
 			<Grid columns='equal' textAlign='center'>
