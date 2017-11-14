@@ -14,20 +14,25 @@ export default class Search extends React.Component {
 		super();
 
 		this.state = {
-			recipes: []
+			recipes: undefined
 		};
 	}
 
 	render() {
+		let recipesExists = this.state.recipes !== undefined;
+		let recipesNonEmpty = recipesExists ? Object.keys(this.state.recipes).length : false;
+
 		let recipeList;
-		if (!!Object.keys(this.state.recipes).length)
-			recipeList = <RecipeList recipes={this.state.recipes} />;
-		else
+		if (!recipesExists)
 			recipeList = (
 				<Container textAlign='center'>
 					<Loader active content={resources.loader.text} />
 				</Container>
-		);
+			);
+		else if (recipesNonEmpty)
+			recipeList = <RecipeList recipes={this.state.recipes} />;
+		else
+			recipeList = <div></div>;
 
 		let content = (
 			<div>
@@ -43,8 +48,8 @@ export default class Search extends React.Component {
 
 		let help = resources.help;
 
-		let title = resources.title.replace('-', this.props.query);
-		title = title.replace('#', this.state.recipes.length);
+		let title = (recipesExists ? resources.title.display : resources.title.searching).replace('-', this.props.query);
+		title = title.replace('#', recipesExists ? this.state.recipes.length : '');
 
 		return <Actionbar back content={content} help={help} signOut title={title} />;
 	}

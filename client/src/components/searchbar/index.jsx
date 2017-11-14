@@ -15,7 +15,7 @@ export default class Searchbar extends React.Component {
 			query: '',
 			diet: ' ',
 			excludeIngredients: '',
-			intolerances: '',
+			intolerances: [],
 			loading: false,
 			showOptions: false,
 		};

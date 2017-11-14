@@ -8,5 +8,8 @@
 	"loader": {
 		"text": "Getting recipe information"
 	},
-	"title": "Showing # recipes relating to \"-\""
+	"title": {
+		"display": "Showing # recipes relating to \"-\"",
+		"searching": "Searching for recipes relating to \"-\""
+	}
 }
