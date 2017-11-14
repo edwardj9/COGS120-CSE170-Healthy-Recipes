@@ -3,7 +3,7 @@ import globalResources from '../../global/page_message.json';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Card, Container, Divider, Grid, Header, Image, Label, List, Menu, Segment, Transition } from 'semantic-ui-react';
+import { Card, Container, Divider, Header, Label, List, Menu, Segment, Transition } from 'semantic-ui-react';
 
 export default class RecipeList extends React.Component {
 

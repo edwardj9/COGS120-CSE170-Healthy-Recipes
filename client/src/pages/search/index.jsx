@@ -10,13 +10,11 @@ import { Container, Loader } from 'semantic-ui-react';
 
 export default class Search extends React.Component {
 
-    
 	constructor() {
 		super();
 
 		this.state = {
-			recipes: [],
-			resultCount: 0,
+			recipes: []
 		};
 	}
 
@@ -46,14 +44,14 @@ export default class Search extends React.Component {
 		let help = resources.help;
 
 		let title = resources.title.replace('-', this.props.query);
-		title = title.replace('#', this.state.resultCount);
+		title = title.replace('#', this.state.recipes.length);
 
 		return <Actionbar back content={content} help={help} signOut title={title} />;
 	}
 
 	componentDidMount() {
 		let qs = {
-			number: 100,
+			number: 25,
 			query: this.props.query,
 			diet: this.props.diet,
 			excludeIngredients: this.props.excludeIngredients,
@@ -65,10 +63,8 @@ export default class Search extends React.Component {
 			if (err)
 				return;
 
-			let recipeInfo = JSON.parse(data);
 			this.setState({
-				recipes: recipeInfo.results,
-				resultCount: recipeInfo.number,
+				recipes: JSON.parse(data)
 			});
 		});
 	}

@@ -9,7 +9,7 @@ const baseOptions = {
 	headers: {
 		'X-Mashape-Key': process.env.API_KEY,
 		'X-Mashape-Host': 'spoonacular-recipe-food-nutrition-v1.p.mashape.com'
-	},
+	}
 };
 
 const getRecipeImageUrl = recipeId => {
@@ -49,13 +49,7 @@ module.exports = function(app) {
 			return recipesList;
 		};
 
-		let getStatic = () => {
-			let recipes = addImageUrl(require(path.join(__dirname, 'static/list.json')).recipes);
-			res.status(500).json({
-				results: recipes,
-				number: recipes.length
-			});
-		};
+		let getStatic = () => res.status(500).json(addImageUrl(require(path.join(__dirname, 'static/list.json')).results));
 
 		if (req.limitReached) {
 			getStatic();
@@ -73,7 +67,7 @@ module.exports = function(app) {
 				return;
 			}
 
-			res.json(addImageUrl(JSON.parse(body)));
+			res.json(addImageUrl(JSON.parse(body).results));
 		});
 	});
 
