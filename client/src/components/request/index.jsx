@@ -17,7 +17,7 @@ export default class Request extends React.Component {
 	}
 
 	render() {
-		return <Modal actions={[{ color: globalResources.color.secondary, content: resources.modal.button.positive, key: resources.modal.button.positive, onClick: this.close.bind(this) }]} content={resources.modal.text} open={this.state.showModal} onClose={this.close.bind(this)} />
+		return <Modal actions={[{ color: globalResources.color.secondary, content: resources.modal.button.positive, key: resources.modal.button.positive, onClick: this.close.bind(this) }]} content={resources.modal.text} open={this.state.showModal} onClose={this.close.bind(this)} />;
 	}
 
 	close() {

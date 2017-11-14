@@ -12,6 +12,13 @@ const baseOptions = {
 	},
 };
 
+const getRecipeImageUrl = recipeId => {
+	let imageBaseUrl = 'https://spoonacular.com/recipeImages/';
+	let imageRes = '556x370';
+
+	return imageBaseUrl + recipeId + '-' + imageRes + '.jpg';
+};
+
 let currData = {
 	calls: 0,
 	date: 0
@@ -34,8 +41,16 @@ module.exports = function(app) {
 	});
 
 	app.get('/api/1.0/recipe/search', function(req, res) {
+		let addImageUrl = recipesList => {
+			recipesList.forEach(recipe => {
+				recipe.image = getRecipeImageUrl(recipe.id);
+			});
+
+			return recipesList;
+		};
+
 		let getStatic = () => {
-			let recipes = require(path.join(__dirname, 'static/list.json')).recipes;
+			let recipes = addImageUrl(require(path.join(__dirname, 'static/list.json')).recipes);
 			res.status(500).json({
 				results: recipes,
 				number: recipes.length
@@ -58,7 +73,7 @@ module.exports = function(app) {
 				return;
 			}
 
-			res.json(JSON.parse(body));
+			res.json(addImageUrl(JSON.parse(body)));
 		});
 	});
 

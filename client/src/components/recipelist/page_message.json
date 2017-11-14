@@ -1,8 +1,11 @@
 {
-	"instructions": "Check 2 recipes to compare",
-  "temp": "Click on recipe name to see more info",
-	"compare": {
-		"clear": "Clear selection",
-		"confirm": "Compare recipes"
-	}
+  "checkbox": {
+    "positive": "Compare",
+    "negative": "Cannot check any more recipes"
+  },
+  "compare": {
+    "clear": "Clear selection",
+    "confirm": "Compare recipes"
+  },
+  "instructions": "Choose 2 recipes to compare health info"
 }

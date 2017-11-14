@@ -6,7 +6,7 @@ import Request from '../../components/request/index';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Button, Container, Header, Icon, List, Loader, Statistic } from 'semantic-ui-react';
+import { Button, Container, Divider, Header, Icon, Image, List, Loader, Statistic } from 'semantic-ui-react';
 
 export default class Recipe extends React.Component {
 
@@ -53,6 +53,7 @@ export default class Recipe extends React.Component {
 
 			this.setState({
 				name: recipeInfo.title,
+				image: recipeInfo.image,
 				ingredients: recipeInfo.extendedIngredients.map(ingredient => [ingredient.amount, ingredient.unitLong, ingredient.name].join(' ')),
 				instructions: recipeInfo.analyzedInstructions.reduce((instructions, instructionSet) => {
 					instructions[instructionSet.name] = instructionSet.steps.map(instruction => instruction.step);
@@ -102,7 +103,11 @@ export default class Recipe extends React.Component {
 
 		let content = (
 			<div>
-				<Button color={globalResources.color.primary} content={resources.health.button.text} fluid onClick={this.recipeHealth.bind(this)} />
+				<Image fluid shape='rounded' src={this.state.image} />
+
+				<Divider hidden />
+
+				<Button color={globalResources.color.secondary} content={resources.health.button.text} fluid onClick={this.recipeHealth.bind(this)} />
 
 				<Header as='h2' color={globalResources.color.secondary} icon size={headerSize} textAlign='center'>
 					<Icon name='shopping basket' />
