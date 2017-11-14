@@ -1,4 +1,7 @@
 {
+  "button": {
+    "text": "View recipe"
+  },
   "health": {
     "noinfo": "Information not available"
   },
