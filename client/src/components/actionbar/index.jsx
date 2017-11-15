@@ -9,6 +9,10 @@ const cookies = require('js-cookie');
 
 export default class Actionbar extends React.Component {
 
+	componentDidMount() {
+		ReactDOM.findDOMNode(this.refs.padding).style.height = ReactDOM.findDOMNode(this.refs.menu).offsetHeight + 'px';
+	}
+
 	render() {
 		let barSize = 'large';
 
@@ -52,9 +56,6 @@ export default class Actionbar extends React.Component {
 		);
 	}
 
-	componentDidMount() {
-		ReactDOM.findDOMNode(this.refs.padding).style.height = ReactDOM.findDOMNode(this.refs.menu).offsetHeight + 'px';
-	}
 
 	goBack() {
 		window.history.back();
