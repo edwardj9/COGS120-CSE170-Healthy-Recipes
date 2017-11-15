@@ -20,12 +20,6 @@ export default class Request extends React.Component {
 		return <Modal actions={[{ color: globalResources.color.secondary, content: resources.modal.button.positive, key: resources.modal.button.positive, onClick: this.close.bind(this) }]} content={resources.modal.text} open={this.state.showModal} onClose={this.close.bind(this)} />;
 	}
 
-	close() {
-		this.setState({
-			showModal: false
-		});
-	}
-
 	get(url, qs, callback = () => {}) {
 		let that = this;
 		let xhr = new XMLHttpRequest();
@@ -48,4 +42,9 @@ export default class Request extends React.Component {
 		xhr.send();
 	}
 
+	close() {
+		this.setState({
+			showModal: false
+		});
+	}
 }

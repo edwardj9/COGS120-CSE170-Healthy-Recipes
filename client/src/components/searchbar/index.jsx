@@ -62,6 +62,19 @@ export default class Searchbar extends React.Component {
 		);
 	}
 
+	search() {
+		if (this.state.query.length) {
+			let qs = {
+				query: this.state.query,
+				diet: this.state.diet.trim(),
+				excludeIngredients: this.state.excludeIngredients.split(',').map(ingredient => ingredient.trim()).join(','),
+				intolerances: this.state.intolerances.join(',')
+			};
+
+			window.location.href = '/search?' + queryString.stringify(qs, { encode: false });
+		}
+	}
+
 	isReady(e, d) {
 		this.setState({
 			query: d.value
@@ -91,18 +104,4 @@ export default class Searchbar extends React.Component {
 			showOptions: !this.state.showOptions
 		});
 	};
-
-	search() {
-		if (this.state.query.length) {
-			let qs = {
-				query: this.state.query,
-				diet: this.state.diet.trim(),
-				excludeIngredients: this.state.excludeIngredients.split(',').map(ingredient => ingredient.trim()).join(','),
-				intolerances: this.state.intolerances.join(',')
-			};
-
-			window.location.href = '/search?' + queryString.stringify(qs, { encode: false });
-		}
-	}
-
 }

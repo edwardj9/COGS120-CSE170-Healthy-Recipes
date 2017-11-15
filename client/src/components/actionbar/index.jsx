@@ -65,5 +65,4 @@ export default class Actionbar extends React.Component {
 		cookies.remove(globalResources.cookies.loggedIn);
 		window.location.href = '/';
 	}
-
 }
