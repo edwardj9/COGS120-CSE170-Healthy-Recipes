@@ -1,9 +1,9 @@
 {
 	"help": [
-		"Enter a words relating to the recipes you want to find!",
+		"Enter keywords relating to the recipes you want to find!",
 		"Select from a variety of related recipes",
-		"Click on two different recipes in order to compare their health information!",
-		"Or click on a recipe to view it and its health benefits"
+		"Toggle compare buttons of two different recipes in order to compare their health information!",
+		"Or click on a recipe to view the recipe instrucitons in detail and its health benefits"
 	],
 	"loader": {
 		"text": "Getting recipe information"
