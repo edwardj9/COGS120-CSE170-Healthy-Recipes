@@ -31,7 +31,7 @@ export default class Login extends React.Component {
 				<Form.Input fluid label={resources.username.label} onChange={(e, d) => this.setField('username', d.value)} />
 				<Form.Input fluid label={resources.password.label} onChange={(e, d) => this.setField('password', d.value)} type='password' />
 
-				<Form.Button basic={this.state.loading} color='teal' content={buttonText} disabled={!this.state.username || !this.state.password} fluid type='submit' />
+				<Form.Button basic={this.state.loading} color={globalResources.color.secondary} content={buttonText} disabled={!this.state.username || !this.state.password} fluid type='submit' />
 			</Form>
 		);
 
