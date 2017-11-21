@@ -1,6 +1,7 @@
 import globalResources from './global/page_message.json';
 
 import Compare from './pages/compare/index';
+import Compare2 from './pages/compare2/index';
 import Home from './pages/home/index';
 import Login from './pages/login/index';
 import Recipe from './pages/recipe/index';
@@ -19,6 +20,7 @@ export default class App extends React.Component {
 		let routeMap = {
 			'/': Login,
 			'/compare/:id1/:id2': Compare,
+			'/compare2/:id1/:id2': Compare2,
 			'/home': Home,
 			'/recipe/:id': Recipe,
 			'/search': Search

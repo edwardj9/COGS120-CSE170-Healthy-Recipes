@@ -109,14 +109,14 @@ export default class Recipe extends React.Component {
 
 				<Button color={globalResources.color.secondary} content={resources.health.button.text} fluid onClick={this.recipeHealth.bind(this)} />
 
-				<Header as='h2' color={globalResources.color.secondary} icon size={headerSize} textAlign='center'>
+				<Header as='h2' color={globalResources.color.tertiary} icon size={headerSize} textAlign='center'>
 					<Icon name='shopping basket' />
 					{resources.ingredients.title}
 				</Header>
 				{ingredients}
 
 				<Header content='' size='small' />
-				<Header as='h2' color={globalResources.color.secondary} icon size={headerSize} textAlign='center'>
+				<Header as='h2' color={globalResources.color.tertiary} icon size={headerSize} textAlign='center'>
 					<Icon name='ordered list' />
 					{resources.instructions.title}
 				</Header>
@@ -124,7 +124,7 @@ export default class Recipe extends React.Component {
 
 				<Header content='' size='small' />
 				<div ref='health'>
-					<Header as='h2' color={globalResources.color.secondary} icon size={headerSize} textAlign='center'>
+					<Header as='h2' color={globalResources.color.tertiary} icon size={headerSize} textAlign='center'>
 						<Icon name='heartbeat' />
 						{resources.health.title}
 					</Header>

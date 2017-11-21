@@ -1,11 +1,11 @@
 {
 	"search": {
-		"placeholder": "Search for recipes",
+		"placeholder": "Search for dinner, pasta, Thanksgiving...",
 		"button": "Search for recipes"
 	},
   "options": {
-    "button": {
-      "content": "Health Options"
+    "buttons": {
+      "health": "Health Options"
     },
     "diet": {
       "label": "Diet Preferences",
@@ -13,10 +13,9 @@
       "values": {
         " ": "None",
         "pescetarian": "Pescetarian",
-        "lacto vegetarian": "Lacto Vegetarian",
-        "ovo vegetarian": "Ovo Vegetarian",
         "vegan": "Vegan",
-        "vegetarian": "Vegetarian"
+        "vegetarian": "Vegetarian",
+        "other": "Other"
       }
     },
     "excludeIngredients": {
@@ -37,8 +36,16 @@
         "soy": "Soy",
         "sulfite": "Sulfite",
         "tree nut": "Tree Nut",
-        "wheat": "Wheat"
+        "wheat": "Wheat",
+        "other": "Other"
       }
+    },
+    "modal": {
+      "buttons": {
+        "add": "Add",
+        "cancel": "Cancel"
+      },
+      "header": "Input other"
     }
   }
 }

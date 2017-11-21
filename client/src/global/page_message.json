@@ -1,7 +1,8 @@
 {
 	"color": {
 		"primary": "grey",
-		"secondary": "teal"
+		"secondary": "blue",
+    "tertiary": "orange"
 	},
 	"cookies": {
 		"loggedIn": "logged_in"

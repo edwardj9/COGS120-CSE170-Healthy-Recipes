@@ -9,6 +9,9 @@
     "confirm": "Compare recipes"
   },
   "instructions": "Choose 2 recipes to compare health info",
+  "top": {
+    "text": "Go to top of page"
+  },
   "view": {
     "text": "View Recipe"
   }

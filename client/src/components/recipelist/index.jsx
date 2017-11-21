@@ -32,6 +32,9 @@ export default class RecipeList extends React.Component {
 					{recipeItems}
 				</List>
 
+				<Divider clearing hidden />
+				<Button basic color={globalResources.color.secondary} content={resources.top.text} fluid onClick={() => document.body.scrollTop = document.documentElement.scrollTop = 0} />
+
 				<div ref='padding' />
 
 				<Transition animation='fade up' duration={transitionDuration} onShow={this.padBottom.bind(this)} onHide={this.padBottom.bind(this)} transitionOnMount unmountOnHide visible={this.state.selected.length >= 1}>
@@ -71,7 +74,7 @@ export default class RecipeList extends React.Component {
 	}
 
 	compareRecipes() {
-		window.location.href = '/compare/' + this.state.selected[0] + '/' + this.state.selected[1];
+		window.location.href = '/compare2/' + this.state.selected[0] + '/' + this.state.selected[1];
 	}
 
 }
@@ -81,8 +84,8 @@ class RecipeItem extends React.Component {
 	render() {
 		return (
 			<List.Item ref='item'>
-				<Image avatar id={this.props.id + 'image'} onClick={this.goToRecipe.bind(this)} src={this.props.imgSrc} size='tiny' />
-				<List.Content description={'Ready in ' + this.props.time + ' minutes'} header={this.props.name} id={this.props.id + 'title'} onClick={this.goToRecipe.bind(this)} />
+				<Image avatar id={this.props.id + 'image'} src={this.props.imgSrc} size='tiny' />
+				<List.Content description={'Ready in ' + this.props.time + ' minutes'} header={this.props.name} id={this.props.id + 'title'} />
 				
 				<Grid columns={2} style={{ marginTop: '0.01%' }}>
 					<Grid.Row>
@@ -90,7 +93,7 @@ class RecipeItem extends React.Component {
 							<Button basic compact content={resources.view.text} fluid onClick={this.goToRecipe.bind(this)} />
 						</Grid.Column>
 						<Grid.Column>
-							<Button basic={!this.props.isChecked} color={this.props.isChecked ? globalResources.color.secondary : globalResources.color.primary} compact content={this.props.disabledCheckbox ? resources.checkbox.negative : (this.props.isChecked ? resources.checkbox.confirm : resources.checkbox.positive)} disabled={this.props.disabledCheckbox} fluid onClick={() => this.props.onCheck(!this.props.isChecked)} />
+							<Button basic={this.props.disabledCheckbox} color={this.props.isChecked ? globalResources.color.tertiary : (this.props.disabledCheckbox ? globalResources.color.primary : globalResources.color.secondary)} compact content={this.props.disabledCheckbox ? resources.checkbox.negative : (this.props.isChecked ? resources.checkbox.confirm : resources.checkbox.positive)} disabled={this.props.disabledCheckbox} fluid onClick={() => this.props.onCheck(!this.props.isChecked)} />
 						</Grid.Column>
 					</Grid.Row>
 				</Grid>
@@ -99,7 +102,7 @@ class RecipeItem extends React.Component {
 	}
 
 	componentDidMount() {
-		document.getElementById(this.props.id + 'title').style.width = (ReactDOM.findDOMNode(this.refs.item).offsetWidth - document.getElementById(this.props.id + 'image').offsetWidth) + 'px';
+		document.getElementById(this.props.id + 'title').style.width = Math.round((ReactDOM.findDOMNode(this.refs.item).offsetWidth - document.getElementById(this.props.id + 'image').offsetWidth) * 0.95) + 'px';
 	}
 
 	goToRecipe() {

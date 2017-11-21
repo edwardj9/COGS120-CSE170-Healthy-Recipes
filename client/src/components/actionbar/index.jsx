@@ -16,14 +16,16 @@ export default class Actionbar extends React.Component {
 	render() {
 		let barSize = 'large';
 
-		if (this.props.back)
+		if (this.props.back) {
 			var back = <Menu.Item content={resources.back.text} icon='arrow left' onClick={this.goBack.bind(this)} />;
+			var home = <Menu.Item content={resources.home.text} icon='home' onClick={this.goHome.bind(this)} />;
+		}
 
 		if (this.props.signOut)
-			var signOut = <Modal actions={[resources.signOut.modal.button.negative, { color: globalResources.color.secondary, content: resources.signOut.modal.button.positive, onClick: () => this.signOut() }]} content={resources.signOut.modal.text} trigger={<Menu.Item content={resources.signOut.text} icon='sign out' />} />;
+			var signOut = <Modal actions={[resources.signOut.modal.button.negative, { color: globalResources.color.secondary, content: resources.signOut.modal.button.positive, key: resources.signOut.modal.button.positive, onClick: () => this.signOut() }]} content={resources.signOut.modal.text} trigger={<Menu.Item content={resources.signOut.text} icon='sign out' />} />;
 
 		if (this.props.help)
-			var help = <Modal actions={[{ color: globalResources.color.secondary, content: resources.help.modal.button.positive }]} content={this.props.help.map(h => <p key={h}>{h}</p>)} trigger={<Menu.Item content={resources.help.text} icon='help circle' />} />;
+			var help = <Modal actions={[{ color: globalResources.color.secondary, content: resources.help.modal.button.positive, key: resources.help.modal.button.positive }]} content={this.props.help.map(h => <p key={h}>{h}</p>)} trigger={<Menu.Item content={resources.help.text} icon='help circle' />} />;
 
 		if (this.props.title)
 			var title = (
@@ -40,7 +42,6 @@ export default class Actionbar extends React.Component {
 
 					<Menu.Menu position='right'>
 						{signOut}
-
 						{help}
 					</Menu.Menu>
 				</Menu>
@@ -56,9 +57,12 @@ export default class Actionbar extends React.Component {
 		);
 	}
 
-
 	goBack() {
 		window.history.back();
+	}
+
+	goHome() {
+		window.location.href = '/home';
 	}
 
 	signOut() {
