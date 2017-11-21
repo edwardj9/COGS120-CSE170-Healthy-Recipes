@@ -6,7 +6,7 @@ import Request from '../../components/request/index';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Button, Container, Divider, Header, Icon, Image, List, Loader, Statistic } from 'semantic-ui-react';
+import { Button, Container, Divider, Header, Icon, Image, List, Loader, Progress } from 'semantic-ui-react';
 
 export default class Recipe extends React.Component {
 
@@ -47,7 +47,7 @@ export default class Recipe extends React.Component {
 				recipeInfo.analyzedInstructions = [{
 					name: '',
 					steps: [{
-						step: 'Information not available'
+						step: resources.instructions.missing
 					}]
 				}];
 
@@ -60,7 +60,11 @@ export default class Recipe extends React.Component {
 					return instructions;
 				}, {}),
 				health: recipeInfo.nutrition.nutrients.reduce((health, nutrient) => {
-					health[nutrient.title] = [nutrient.amount, nutrient.unit].join(' ');
+					health[nutrient.title] = {
+						amount: Math.round(nutrient.amount),
+						total: Math.round(nutrient.amount / (nutrient.percentOfDailyNeeds ? nutrient.percentOfDailyNeeds / 100 : 1)),
+						unit: nutrient.unit
+					};
 					return health;
 				}, {})
 			});
@@ -97,8 +101,8 @@ export default class Recipe extends React.Component {
 								instructionContent = <List.Item as='li' description={instructionSteps[0]} key={instructionSteps[0]} />
 							else
 								instructionContent = (
-									<List.Item as='li'>
-										<List.List as='ol'>
+									<List.Item as='li' key={instruction + 'item'}>
+										<List.List as='ol' key={instruction + 'list'}>
 											{instructionSteps.map(step => <List.Item as='li' description={step} key={step} />)}
 										</List.List>
 									</List.Item>
@@ -113,8 +117,22 @@ export default class Recipe extends React.Component {
 
 		let health = (
 			<Container textAlign='center'>
-				<List relaxed='very'>
-					{Object.keys(this.state.health).map(healthStat => <List.Item content={<Statistic key={healthStat+'stat'} label={healthStat} value={this.state.health[healthStat]} color={globalResources.color.primary} size='small' />} key={healthStat + 'item'} />)}
+				<List>
+					{
+						Object.keys(this.state.health).filter(healthStat => this.state.health[healthStat].amount).map(healthStat => {
+							let amount = this.state.health[healthStat].amount;
+							let total = this.state.health[healthStat].total;
+							let unit = this.state.health[healthStat].unit;
+
+							return (
+								<List.Item key={healthStat + 'item'}>
+									<Header content={healthStat} key={healthStat + 'header'} />
+									<Header as='p' color={globalResources.color.secondary} content={amount + ' / ' + total + ' ' + unit + ' of daily need'} key={healthStat + 'numbers'} style={{ margin: '0px' }} />
+									<Progress color={globalResources.color.secondary} key={healthStat + 'progress'} percent={amount / total * 100} />
+								</List.Item>
+							);
+						})
+					}
 				</List>
 			</Container>
 		);

@@ -14,7 +14,8 @@
 		"title": "Ingredients"
 	},
 	"instructions": {
-		"title": "Instructions"
+		"title": "Instructions",
+		"missing": "Instructions not available"
 	},
 	"loader": {
 		"text": "Getting recipe information"

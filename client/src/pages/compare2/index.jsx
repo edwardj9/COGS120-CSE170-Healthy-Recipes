@@ -45,7 +45,7 @@ export default class Compare extends React.Component {
 							amount: Math.round(nutrient.amount),
 							total: Math.round(nutrient.amount / (nutrient.percentOfDailyNeeds ? nutrient.percentOfDailyNeeds / 100 : 1)),
 							unit: nutrient.unit
-						}
+						};
 						return health;
 					}, {})
 				};
@@ -111,18 +111,21 @@ export default class Compare extends React.Component {
 			});
 		});
 
-		let healthStats = Object.keys(healthNames).map(healthName => {
-			let healthInfoExists = Object.keys(this.state)
-				.map(recipeId => !!this.state[recipeId].health[healthName] ? this.state[recipeId].health[healthName].amount : false)
-				.filter(hasHealthInfo => hasHealthInfo);
+		let healthStats = Object.keys(healthNames)
+			.filter(healthName => {
+				let healthInfoExists = Object.keys(this.state)
+					.map(recipeId => !!this.state[recipeId].health[healthName] ? this.state[recipeId].health[healthName].amount : false)
+					.filter(hasHealthInfo => hasHealthInfo);
 
-			if (healthInfoExists.length)
+				return healthInfoExists.length >= Object.keys(this.state).length;
+			})
+			.map(healthName => {
 				return [
 					<Divider fitted key={healthName + 'divider'} />
 					,
 					<Grid.Row key={healthName + 'header row'}>
 						<Grid.Column key={healthName + 'header col'}>
-							<Header content={healthName} key ={healthName} />
+							<Header content={healthName} key={healthName} />
 						</Grid.Column>
 					</Grid.Row>
 					,
@@ -137,7 +140,7 @@ export default class Compare extends React.Component {
 								let total = totals[healthName];
 								let unit = amount ? this.state[recipeId].health[healthName].unit : undefined
 
-								let header = <Header as='p' color={colors[indices.indexOf(recipeId)]} content={amount ? (amount + ' / ' + total) + ' ' + unit + ' of daily need': resources.health.noinfo} key={key + 'header'} style={{ margin: '0px' }} />;
+								let header = <Header as='p' color={colors[indices.indexOf(recipeId)]} content={amount ? amount + ' / ' + total + ' ' + unit + ' of daily need' : resources.health.noinfo} key={key + 'header'} style={{ margin: '0px' }} />;
 
 								return [
 									(indices.indexOf(recipeId) === 0) ? header : undefined,
@@ -149,9 +152,7 @@ export default class Compare extends React.Component {
 						</Grid.Column>
 					</Grid.Row>
 				];
-
-			return undefined;
-		});
+			});
 
 		let content = (
 			<Grid columns='equal' textAlign='center'>
