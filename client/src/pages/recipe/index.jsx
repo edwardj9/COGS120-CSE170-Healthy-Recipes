@@ -87,8 +87,26 @@ export default class Recipe extends React.Component {
 		let instructions = Object.keys(this.state.instructions).map(instructionSet => (
 			<div key={instructionSet}>
 				{!!instructionSet ? <Header content={instructionSet} size='small' /> : undefined}
-				<List ordered>
-					{this.state.instructions[instructionSet].map(instruction => <List.Item description={instruction} key={instruction} />)}
+				<List as='ol'>
+					{
+						this.state.instructions[instructionSet].map(instruction => {
+							let instructionSteps = instruction.split('.').map(step => step.trim()).filter(step => !!step);
+
+							let instructionContent;
+							if (instructionSteps.length === 1)
+								instructionContent = <List.Item as='li' description={instructionSteps[0]} key={instructionSteps[0]} />
+							else
+								instructionContent = (
+									<List.Item as='li'>
+										<List.List as='ol'>
+											{instructionSteps.map(step => <List.Item as='li' description={step} key={step} />)}
+										</List.List>
+									</List.Item>
+								);
+
+							return instructionContent;
+						})
+					}
 				</List>
 			</div>
 		));

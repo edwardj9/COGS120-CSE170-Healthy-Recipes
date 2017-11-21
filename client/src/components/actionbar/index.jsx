@@ -17,8 +17,8 @@ export default class Actionbar extends React.Component {
 		let barSize = 'large';
 
 		if (this.props.back) {
-			var back = <Menu.Item content={resources.back.text} icon='arrow left' onClick={this.goBack.bind(this)} />;
-			var home = <Menu.Item content={resources.home.text} icon='home' onClick={this.goHome.bind(this)} />;
+			var back = <Menu.Item icon='arrow left' onClick={this.goBack.bind(this)} />;
+			var home = <Menu.Item icon='home' onClick={this.goHome.bind(this)} />;
 		}
 
 		if (this.props.signOut)
@@ -36,9 +36,9 @@ export default class Actionbar extends React.Component {
 
 		return (
 			<div>
-
 				<Menu ref='menu' borderless color={globalResources.color.primary} fixed='top' fluid inverted secondary size={barSize}>
 					{back}
+					{home}
 
 					<Menu.Menu position='right'>
 						{signOut}
