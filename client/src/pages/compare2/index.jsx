@@ -92,17 +92,29 @@ export default class Compare extends React.Component {
 			});
 		});
 
-		let headers = Object.keys(this.state).map(recipeId => (
-			<Grid.Column key={recipeId + 'name'}>
-				<Header as='h2' color={colors[indices.indexOf(recipeId)]} content={this.state[recipeId].name} key={recipeId} size={headerSize} />
-			</Grid.Column>
-		));
+		let recipeNames = (
+			<Grid.Row>
+				{
+					Object.keys(this.state).map(recipeId => (
+						<Grid.Column key={recipeId + 'name'}>
+							<Header as='h2' color={colors[indices.indexOf(recipeId)]} content={this.state[recipeId].name} key={recipeId} size={headerSize} />
+						</Grid.Column>
+					))
+				}
+			</Grid.Row>
+		);
 
-		let buttons = Object.keys(this.state).map(recipeId => (
-			<Grid.Column key={recipeId + 'button'}>
-				<Button basic color={colors[indices.indexOf(recipeId)]} content={resources.button.text} fluid onClick={() => window.location.href = '/recipe/' + recipeId} />
-			</Grid.Column>
-		));
+		let recipeButtons = (
+			<Grid.Row>
+				{
+					Object.keys(this.state).map(recipeId => (
+						<Grid.Column key={recipeId + 'button'}>
+							<Button basic color={colors[indices.indexOf(recipeId)]} content={resources.button.text} fluid onClick={() => window.location.href = '/recipe/' + recipeId} />
+						</Grid.Column>
+					))
+				}
+			</Grid.Row>
+		);
 
 		let healthNames = {};
 		Object.keys(this.state).forEach(recipeId => {
@@ -110,6 +122,14 @@ export default class Compare extends React.Component {
 				healthNames[healthKey] = this.state[recipeId].health[healthKey].unit;
 			});
 		});
+
+		let noMargin = {
+			margin: '0px'
+		};
+
+		let noPadding = {
+			padding: '0px'
+		};
 
 		let healthStats = Object.keys(healthNames)
 			.filter(healthName => {
@@ -120,61 +140,55 @@ export default class Compare extends React.Component {
 				return healthInfoExists.length >= Object.keys(this.state).length;
 			})
 			.map(healthName => {
-				return [
-					// <Divider fitted key={healthName + 'divider'} style={{ margin: '0px' }} />
-					// ,
-					<Grid.Row key={healthName + 'header row'} style={{ margin: '0px', paddingBottom: '0px' }}>
-						<Grid.Column key={healthName + 'header col'} style={{ margin: '0px', padding: '0px' }}>
-							<Header content={healthName} key={healthName} style={{ margin: '0px', padding: '0px' }} />
+				let divider = <Divider fitted key={healthName + 'divider'} />;
+
+				let healthHeader = (
+					<Grid.Row key={healthName + 'name row'} style={Object.assign({}, noMargin, { paddingBottom: '0px' })}>
+						<Grid.Column key={healthName + 'name col'}>
+							<Header content={healthName} key={healthName} />
 						</Grid.Column>
 					</Grid.Row>
-					,
-					<Grid.Row key={healthName + 'header stat row'} style={{ margin: '0px', padding: '0px' }}>
-						{
-							Object.keys(this.state).map(recipeId => {
-								let key = healthName + recipeId;
-								let marginVertical = '0.5%';
+				);
 
-								let amount = !!this.state[recipeId].health[healthName] ? this.state[recipeId].health[healthName].amount : 0;
-								let total = totals[healthName];
-								let unit = amount ? this.state[recipeId].health[healthName].unit : undefined;
+				let statValues = [];
+				let statBars = [];
+				Object.keys(this.state).forEach(recipeId => {
+					let key = healthName + recipeId;
+					let marginVertical = '0.5%';
 
-								return (
-									<Grid.Column key={key + 'stat col'} style={{ margin: '0px', padding: '0px' }}>
-										<Statistic color={colors[indices.indexOf(recipeId)]} key={key + 'header'} size='mini' style={{ margin: '0px' }} value={amount ? amount + ' ' + unit.toUpperCase() : resources.health.noinfo} />
-									</Grid.Column>
-								);
-							})
-						}
+					let amount = this.state[recipeId].health[healthName].amount;
+					let total = totals[healthName];
+					let unit = this.state[recipeId].health[healthName].unit;
+
+					statValues.push(
+						<Grid.Column key={key + 'value stat col'}>
+							<Statistic color={colors[indices.indexOf(recipeId)]} key={key + 'value stat'} size='mini' style={{ margin: '0px' }} value={amount + ' ' + unit.toUpperCase()} />
+						</Grid.Column>
+					);
+
+					statBars.push(<Progress color={colors[indices.indexOf(recipeId)]} key={key + 'progress'} percent={amount / total * 100} style={{ marginTop: marginVertical, marginBottom: marginVertical }} size='tiny' />);
+				});
+
+				let statValuesRow = (
+					<Grid.Row key={healthName + 'value stat row'} style={Object.assign({}, noMargin, noPadding)}>
+						{statValues}
 					</Grid.Row>
-					,
-					<Grid.Row key={healthName + 'stat row'} style={{ margin: '0px', padding: '0px' }}>
-						<Grid.Column key={healthName + 'stat col'} style={{ margin: '0px', padding: '0px' }}>
-						{
-							Object.keys(this.state).map(recipeId => {
-								let key = healthName + recipeId;
-								let marginVertical = '0.5%';
+				);
 
-								let amount = !!this.state[recipeId].health[healthName] ? this.state[recipeId].health[healthName].amount : 0;
-								let total = totals[healthName];
-								let unit = amount ? this.state[recipeId].health[healthName].unit : undefined;
-
-								let header = <Header as='p' color={colors[indices.indexOf(recipeId)]} content={amount ? amount + ' / ' + total + ' ' + unit: resources.health.noinfo} key={key + 'header'} style={{ margin: '0px' }} size='tiny' />;
-
-								return <Progress color={colors[indices.indexOf(recipeId)]} disabled={!amount} key={key + 'progress'} percent={amount ? amount / total * 100 : 0} style={{ marginTop: marginVertical, marginBottom: marginVertical }} size='tiny' />;
-							})
-						}
+				let statBarsRow = (
+					<Grid.Row key={healthName + 'bar stat row'} style={Object.assign({}, noMargin, noPadding)}>
+						<Grid.Column key={healthName + 'bar stat col'}>
+							{statBars}
 						</Grid.Column>
 					</Grid.Row>
-				];
+				);
+
+				return [healthHeader, statValuesRow, statBarsRow];
 			});
 
 		let content = (
 			<Grid columns='equal' textAlign='center'>
-				<Grid.Row>
-					{headers}
-				</Grid.Row>
-
+				{recipeNames}
 				{healthStats}
 			</Grid>
 		);
