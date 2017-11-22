@@ -141,7 +141,7 @@ export default class Compare extends React.Component {
 
 								return (
 									<Grid.Column key={key + 'stat col'} style={{ margin: '0px', padding: '0px' }}>
-										<Statistic key={key + 'header'} size='mini' style={{ margin: '0px' }} value={amount ? amount + ' ' + unit.toUpperCase() : resources.health.noinfo} />
+										<Statistic color={colors[indices.indexOf(recipeId)]} key={key + 'header'} size='mini' style={{ margin: '0px' }} value={amount ? amount + ' ' + unit.toUpperCase() : resources.health.noinfo} />
 									</Grid.Column>
 								);
 							})
