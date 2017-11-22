@@ -5,7 +5,7 @@ import Actionbar from '../../components/actionbar/index';
 import Request from '../../components/request/index';
 
 import React from 'react';
-import { Button, Container, Divider, Grid, Header, Loader, Progress } from 'semantic-ui-react';
+import { Button, Container, Divider, Grid, Header, Loader, Progress, Statistic } from 'semantic-ui-react';
 
 export default class Compare extends React.Component {
 
@@ -93,13 +93,13 @@ export default class Compare extends React.Component {
 		});
 
 		let headers = Object.keys(this.state).map(recipeId => (
-			<Grid.Column key={recipeId + 'col'}>
+			<Grid.Column key={recipeId + 'name'}>
 				<Header as='h2' color={colors[indices.indexOf(recipeId)]} content={this.state[recipeId].name} key={recipeId} size={headerSize} />
 			</Grid.Column>
 		));
 
 		let buttons = Object.keys(this.state).map(recipeId => (
-			<Grid.Column key={recipeId + 'col'}>
+			<Grid.Column key={recipeId + 'button'}>
 				<Button basic color={colors[indices.indexOf(recipeId)]} content={resources.button.text} fluid onClick={() => window.location.href = '/recipe/' + recipeId} />
 			</Grid.Column>
 		));
@@ -129,6 +129,25 @@ export default class Compare extends React.Component {
 						</Grid.Column>
 					</Grid.Row>
 					,
+					<Grid.Row key={healthName + 'header stat row'} style={{ margin: '0px', padding: '0px' }}>
+						{
+							Object.keys(this.state).map(recipeId => {
+								let key = healthName + recipeId;
+								let marginVertical = '0.5%';
+
+								let amount = !!this.state[recipeId].health[healthName] ? this.state[recipeId].health[healthName].amount : 0;
+								let total = totals[healthName];
+								let unit = amount ? this.state[recipeId].health[healthName].unit : undefined;
+
+								return (
+									<Grid.Column key={key + 'stat col'} style={{ margin: '0px', padding: '0px' }}>
+										<Statistic key={key + 'header'} size='mini' style={{ margin: '0px' }} value={amount ? amount + ' ' + unit.toUpperCase() : resources.health.noinfo} />
+									</Grid.Column>
+								);
+							})
+						}
+					</Grid.Row>
+					,
 					<Grid.Row key={healthName + 'stat row'} style={{ margin: '0px', padding: '0px' }}>
 						<Grid.Column key={healthName + 'stat col'} style={{ margin: '0px', padding: '0px' }}>
 						{
@@ -138,15 +157,11 @@ export default class Compare extends React.Component {
 
 								let amount = !!this.state[recipeId].health[healthName] ? this.state[recipeId].health[healthName].amount : 0;
 								let total = totals[healthName];
-								let unit = amount ? this.state[recipeId].health[healthName].unit : undefined
+								let unit = amount ? this.state[recipeId].health[healthName].unit : undefined;
 
 								let header = <Header as='p' color={colors[indices.indexOf(recipeId)]} content={amount ? amount + ' / ' + total + ' ' + unit: resources.health.noinfo} key={key + 'header'} style={{ margin: '0px' }} size='tiny' />;
 
-								return [
-									(indices.indexOf(recipeId) === 0) ? header : undefined,
-									<Progress color={colors[indices.indexOf(recipeId)]} disabled={!amount} key={key + 'progress'} percent={amount ? amount / total * 100 : 0} style={{ marginTop: marginVertical, marginBottom: marginVertical }} size='tiny' />,
-									(indices.indexOf(recipeId) === 0) ? undefined : header
-								];
+								return <Progress color={colors[indices.indexOf(recipeId)]} disabled={!amount} key={key + 'progress'} percent={amount ? amount / total * 100 : 0} style={{ marginTop: marginVertical, marginBottom: marginVertical }} size='tiny' />;
 							})
 						}
 						</Grid.Column>
