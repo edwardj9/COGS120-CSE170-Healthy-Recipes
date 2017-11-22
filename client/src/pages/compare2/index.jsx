@@ -98,11 +98,12 @@ export default class Compare extends React.Component {
 			</Grid.Column>
 		));
 
-		let buttons = Object.keys(this.state).map(recipeId => (
-			<Grid.Column key={recipeId + 'col'}>
-				<Button basic color={colors[indices.indexOf(recipeId)]} content={resources.button.text} fluid onClick={() => window.location.href = '/recipe/' + recipeId} />
-			</Grid.Column>
-		));
+		// let buttons = Object.keys(this.state).map(recipeId => (
+		// 	<Grid.Column key={recipeId + 'col'}>
+		// 		<Button basic color={colors[indices.indexOf(recipeId)]} content={resources.button.text} fluid onClick={() => window.location.href = '/recipe/' + recipeId} />
+		// 	</Grid.Column>
+		// ));
+		let buttons = undefined;
 
 		let healthNames = {};
 		Object.keys(this.state).forEach(recipeId => {
