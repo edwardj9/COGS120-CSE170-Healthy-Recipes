@@ -7,6 +7,13 @@ import Request from '../../components/request/index';
 import React from 'react';
 import { Container, Grid, Header, Loader, Statistic } from 'semantic-ui-react';
 
+import ReactGA from 'react-ga';
+
+export const initGA = () => {
+	ReactGA.initialize('UA-109989482-2');
+	ReactGA.pageview(window.location.pathname + window.location.search);
+}
+
 export default class Compare extends React.Component {
 
 	constructor() {
@@ -30,6 +37,7 @@ export default class Compare extends React.Component {
 	}
 
 	componentDidMount() {
+		initGA();
 		[this.props.match.params.id1, this.props.match.params.id2].forEach(recipeId => {
 			this.refs.request.get('/api/1.0/recipe/' + recipeId, {}, (err, data) => {
 				if (err)

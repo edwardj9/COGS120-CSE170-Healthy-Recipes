@@ -55,6 +55,7 @@ export default class Search extends React.Component {
 	}
 
 	componentDidMount() {
+
 		let qs = {
 			number: 25,
 			query: this.props.query,

@@ -17,7 +17,7 @@ export default class Home extends React.Component {
 
 				<div style={{ margin: '5%' }} />
 
-				<Searchbar alwaysOpen />
+				<Searchbar />
 			</div>
 		);
 
