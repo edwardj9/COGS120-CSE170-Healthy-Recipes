@@ -76,7 +76,7 @@ export default class RecipeList extends React.Component {
 	}
 
 	compareRecipes() {
-		window.location.href = '/compare2/' + this.state.selected[0] + '/' + this.state.selected[1];
+		window.location.href = '/compare' + (Math.random() < 0.5 ? '' : '2') + '/' + this.state.selected[0] + '/' + this.state.selected[1];
 	}
 
 }
@@ -108,6 +108,6 @@ class RecipeItem extends React.Component {
 	}
 
 	goToRecipe() {
-		window.location.href = '/recipe' + (Math.random() < 0.5 ? '' : '2') + '/' + this.props.id;
+		window.location.href = '/recipe/' + this.props.id;
 	}
 }
