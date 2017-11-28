@@ -14,24 +14,24 @@ export default class Login extends React.Component {
 		super();
 
 		this.state = {
-			username: '',
-			password: ''
+			username: {
+				value: '',
+				error: false
+			},
+			password: {
+				value: '',
+				error: false
+			}
 		};
 	}
 
 	render() {
-		let buttonText = resources.submit.text;
-		if (!this.state.username)
-			buttonText = resources.username.error;
-		else if (!this.state.password)
-			buttonText = resources.password.error;
-
 		let content = (
 			<Form onSubmit={this.login.bind(this)}>
-				<Form.Input fluid label={resources.username.label} onChange={(e, d) => this.setField('username', d.value)} />
-				<Form.Input fluid label={resources.password.label} onChange={(e, d) => this.setField('password', d.value)} type='password' />
+				<Form.Input error={this.state.username.error} fluid label={resources.username.label} onChange={(e, d) => this.setField('username', d.value)} />
+				<Form.Input error={this.state.password.error} fluid label={resources.password.label} onChange={(e, d) => this.setField('password', d.value)} type='password' />
 
-				<Form.Button basic={this.state.loading} color={globalResources.color.secondary} content={buttonText} disabled={!this.state.username || !this.state.password} fluid type='submit' />
+				<Form.Button basic={this.state.loading} color={globalResources.color.secondary} content={resources.submit.text} fluid type='submit' />
 			</Form>
 		);
 
@@ -41,12 +41,22 @@ export default class Login extends React.Component {
 	}
 
 	setField(field, data) {
-		let newState = {};
-		newState[field] = data;
-		this.setState(newState);
+		this.state[field].value = data;
+		this.setState(this.state);
 	}
 
 	login() {
+		console.log(this.state)
+		let usernameError = !this.state.username.value;
+		let passwordError = !this.state.password.value;
+
+		if (usernameError || passwordError) {
+			this.state.username.error = usernameError;
+			this.state.password.error = passwordError;
+			this.setState(this.state);
+			return;
+		}
+
 		cookies.set(globalResources.cookies.loggedIn, 1);
 		window.location.href = '/home';
 	}

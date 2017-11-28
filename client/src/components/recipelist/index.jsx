@@ -1,6 +1,8 @@
 import resources from './page_message.json';
 import globalResources from '../../global/page_message.json';
 
+import QuickJump from '../quickjump/index.jsx';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Button, Divider, Grid, Header, Image, List, Menu, Segment, Transition } from 'semantic-ui-react';
@@ -33,7 +35,7 @@ export default class RecipeList extends React.Component {
 				</List>
 
 				<Divider clearing hidden />
-				<Button basic color={globalResources.color.secondary} content={resources.top.text} fluid onClick={() => document.body.scrollTop = document.documentElement.scrollTop = 0} />
+				<QuickJump />
 
 				<div ref='padding' />
 

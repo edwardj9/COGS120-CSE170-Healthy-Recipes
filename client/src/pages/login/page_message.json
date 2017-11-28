@@ -1,18 +1,17 @@
 {
+	"help": [
+		"Log in to search recipes relating to keywords",
+		"After searching a key words a list of relevant recipes will appear",
+		"You can choose a recipe now or click on two to compare recipe health benefits"
+	],
+	"note": "Please enter",
 	"password": {
-		"label": "Password",
-		"error": "Please enter password"
+		"label": "Password"
 	},
 	"submit": {
 		"text": "Login"
 	},
 	"username": {
-		"label": "Username",
-		"error": "Please enter username"
-	},
-	"help": [
-		"Log in to search recipes relating to keywords",
-		"After searching a key words a list of relevant recipes will appear",
-		"You can choose a recipe now or click on two to compare recipe health benefits"
-	]
+		"label": "Username"
+	}
 }

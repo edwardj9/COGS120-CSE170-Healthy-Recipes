@@ -1,6 +1,8 @@
 import resources from './page_message.json';
 import globalResources from '../../global/page_message.json';
 
+import QuickJump from '../../components/quickjump/index.jsx';
+
 import Actionbar from '../../components/actionbar/index';
 import Request from '../../components/request/index';
 
@@ -128,7 +130,7 @@ export default class Recipe extends React.Component {
 								<List.Item key={healthStat + 'item'}>
 									<Header content={healthStat} key={healthStat + 'header'} />
 									<Header as='p' color={globalResources.color.secondary} content={amount + ' / ' + total + ' ' + unit + ' of daily need'} key={healthStat + 'numbers'} style={{ margin: '0px' }} />
-									<Progress color={globalResources.color.secondary} key={healthStat + 'progress'} percent={amount / total * 100} />
+									<Progress color={globalResources.color.secondary} key={healthStat + 'progress'} percent={amount / total * 100} size='small' />
 								</List.Item>
 							);
 						})
@@ -167,6 +169,7 @@ export default class Recipe extends React.Component {
 				</div>
 				{health}
 
+				<QuickJump />
 			</div>
 		);
 

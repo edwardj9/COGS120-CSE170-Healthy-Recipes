@@ -1,18 +1,13 @@
 import resources from './page_message.json';
 import globalResources from '../../global/page_message.json';
 
+import { init } from '../../global/ga';
+
 import Actionbar from '../../components/actionbar/index';
 import Request from '../../components/request/index';
 
 import React from 'react';
 import { Container, Grid, Header, Loader, Statistic } from 'semantic-ui-react';
-
-import ReactGA from 'react-ga';
-
-export const initGA = () => {
-	ReactGA.initialize('UA-109989482-2');
-	ReactGA.pageview(window.location.pathname + window.location.search);
-}
 
 export default class Compare extends React.Component {
 
@@ -20,6 +15,10 @@ export default class Compare extends React.Component {
 		super();
 
 		this.state = {};
+	}
+
+	componentWillMount() {
+		init();
 	}
 
 	render() {
@@ -37,7 +36,6 @@ export default class Compare extends React.Component {
 	}
 
 	componentDidMount() {
-		initGA();
 		[this.props.match.params.id1, this.props.match.params.id2].forEach(recipeId => {
 			this.refs.request.get('/api/1.0/recipe/' + recipeId, {}, (err, data) => {
 				if (err)
@@ -71,22 +69,6 @@ export default class Compare extends React.Component {
 		);
 	}
 
-	renderCharts(ingredients) {
-		return ( 
-			<div>
-				<pre id="spoonacular-ingredients" style={{ display: "none" }}>
-          {ingredients}
-				</pre>
-				<div id="spoonacular-nutrition-visualizer"></div>
-				<script type="text/javascript">
-			 		var spoonacularServings = 1;
-				</script>
-				<script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-				<script type="text/javascript" src="https://spoonacular.com/cdn/spoonacular-1.6.min.js"></script>
-			</div>
-		);
-	}
-
 	renderHealth() {
 		let headerSize = 'medium';
 
@@ -105,13 +87,13 @@ export default class Compare extends React.Component {
 
 		let healthStats = Object.keys(healthNames).map(healthName => (
 			<Grid.Row>
-					{
-						Object.keys(this.state).map(recipeId => (
-							<Grid.Column>
-								<Statistic label={healthName} value={!!this.state[recipeId].health[healthName] ? (this.state[recipeId].health[healthName].amount + ' ' + this.state[recipeId].health[healthName].unit) : '-'} size='mini' />
-							</Grid.Column>
-						))
-					}
+				{
+					Object.keys(this.state).map(recipeId => (
+						<Grid.Column>
+							<Statistic label={healthName} key={healthName + recipeId} value={!!this.state[recipeId].health[healthName] ? (this.state[recipeId].health[healthName].amount + ' ' + this.state[recipeId].health[healthName].unit) : '-'} size='mini' />
+						</Grid.Column>
+					))
+				}
 			</Grid.Row>
 		));
 
