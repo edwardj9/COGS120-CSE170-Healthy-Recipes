@@ -1,7 +1,6 @@
 import ReactGA from 'react-ga';
 
 export function init() {
-  console.log(process.env);
-  ReactGA.initialize(process.env.GA_KEY);
+  ReactGA.initialize('UA-109989482-2');
   ReactGA.pageview(window.location.pathname + window.location.search);
 };
