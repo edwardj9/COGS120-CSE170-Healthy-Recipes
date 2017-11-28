@@ -108,6 +108,6 @@ class RecipeItem extends React.Component {
 	}
 
 	goToRecipe() {
-		window.location.href = '/recipe/' + this.props.id;
+		window.location.href = '/recipe' + (Math.random() < 0.5 ? '' : '2') + '/' + this.props.id;
 	}
 }
