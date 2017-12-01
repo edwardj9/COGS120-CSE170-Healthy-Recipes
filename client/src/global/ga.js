@@ -1,7 +1,7 @@
 import ReactGA from 'react-ga';
 
 export function init() {
-	ReactGA.initialize('UA-109989482-2');
+	ReactGA.initialize('UA-110505342-1');
 	ReactGA.pageview(window.location.pathname + window.location.search);
 	return Date.now();
 };
