@@ -1,7 +1,7 @@
 import resources from './page_message.json';
 import globalResources from '../../global/page_message.json';
 
-import { init } from '../../global/ga';
+import { init, sendTime } from '../../global/ga';
 
 import Actionbar from '../../components/actionbar/index';
 import Request from '../../components/request/index';
@@ -14,17 +14,32 @@ export default class Compare extends React.Component {
 	constructor() {
 		super();
 
-		this.state = {};
+		this.state = {
+			start: init()
+		};
+	}
+
+	onExit() {
+		sendTime(this.props.match.path, this.state.start);
 	}
 
 	componentWillMount() {
-		init();
+		this.setState({
+			start: init()
+		});
+
+		window.addEventListener('beforeunload', this.onExit.bind(this));
+	}
+
+	componentWillUnmount() {
+		this.onExit();
+		window.removeEventListener('beforeunload', this.onExit.bind(this));
 	}
 
 	render() {
 		let content = (
 			<div>
-				{(Object.keys(this.state).length >= 2) ? this.renderHealth() : this.renderLoading()}
+				{(Object.keys(this.state).filter(key => key !== 'start').length >= 2) ? this.renderHealth() : this.renderLoading()}
 
 				<Request ref='request' />
 			</div>
@@ -32,7 +47,7 @@ export default class Compare extends React.Component {
 
 		let help = resources.help;
 
-		return <Actionbar back content={content} help={help} signOut />;
+		return <Actionbar back content={content} help={help} onExit={() => sendTime(this.state.start)} signOut />;
 	}
 
 	componentDidMount() {
@@ -71,15 +86,16 @@ export default class Compare extends React.Component {
 
 	renderHealth() {
 		let headerSize = 'medium';
+		let recipeIds = Object.keys(this.state).filter(key => key !== 'start');
 
-		let headers = Object.keys(this.state).map(recipeId => (
+		let headers = recipeIds.map(recipeId => (
 			<Grid.Column key={recipeId + 'col'}>
 				<Header as='h2' color={globalResources.color.secondary} content={this.state[recipeId].name} key={recipeId} size={headerSize} />
 			</Grid.Column>
 		));
 
 		let healthNames = {};
-		Object.keys(this.state).forEach(recipeId => {
+		recipeIds.forEach(recipeId => {
 			Object.keys(this.state[recipeId].health).forEach(healthKey => {
 				healthNames[healthKey] = this.state[recipeId].health[healthKey].unit;
 			});
@@ -88,7 +104,7 @@ export default class Compare extends React.Component {
 		let healthStats = Object.keys(healthNames).map(healthName => (
 			<Grid.Row>
 				{
-					Object.keys(this.state).map(recipeId => (
+					recipeIds.map(recipeId => (
 						<Grid.Column>
 							<Statistic label={healthName} key={healthName + recipeId} value={!!this.state[recipeId].health[healthName] ? (this.state[recipeId].health[healthName].amount + ' ' + this.state[recipeId].health[healthName].unit) : '-'} size='mini' />
 						</Grid.Column>
