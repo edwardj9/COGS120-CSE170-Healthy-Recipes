@@ -21,14 +21,6 @@ export default class Compare extends React.Component {
 		sendTime(this.props.match.path, this.state.start);
 	}
 
-	componentWillMount() {
-		this.setState({
-			start: init()
-		});
-
-		window.addEventListener('beforeunload', this.onExit.bind(this));
-	}
-
 	componentWillUnmount() {
 		this.onExit();
 		window.removeEventListener('beforeunload', this.onExit.bind(this));
@@ -49,6 +41,12 @@ export default class Compare extends React.Component {
 	}
 
 	componentDidMount() {
+		this.setState({
+			start: init()
+		});
+
+		window.addEventListener('beforeunload', this.onExit.bind(this));
+
 		[this.props.match.params.id1, this.props.match.params.id2].forEach(recipeId => {
 			this.refs.request.get('/api/1.0/recipe/' + recipeId, {}, (err, data) => {
 				if (err)
