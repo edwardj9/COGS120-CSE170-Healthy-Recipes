@@ -7,7 +7,7 @@ import Actionbar from '../../components/actionbar/index';
 import Request from '../../components/request/index';
 
 import React from 'react';
-import { Container, Grid, Header, Loader, Statistic } from 'semantic-ui-react';
+import { Button, Container, Grid, Header, Loader, Statistic } from 'semantic-ui-react';
 
 export default class Compare extends React.Component {
 
@@ -92,6 +92,12 @@ export default class Compare extends React.Component {
 			</Grid.Column>
 		));
 
+		let buttons = recipeIds.map(recipeId => (
+			<Grid.Column key={recipeId + 'button'}>
+				<Button basic color={globalResources.color.secondary} content={resources.button.text} fluid onClick={() => window.location.href = '/recipe/' + recipeId} />
+			</Grid.Column>
+		));
+
 		let healthNames = {};
 		recipeIds.forEach(recipeId => {
 			Object.keys(this.state[recipeId].health).forEach(healthKey => {
@@ -115,6 +121,10 @@ export default class Compare extends React.Component {
 			<Grid columns='equal' divided textAlign='center'>
 				<Grid.Row>
 					{headers}
+				</Grid.Row>
+
+				<Grid.Row>
+					{buttons}
 				</Grid.Row>
 
 				{healthStats}

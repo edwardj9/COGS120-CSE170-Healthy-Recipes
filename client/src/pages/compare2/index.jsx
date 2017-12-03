@@ -142,7 +142,7 @@ export default class Compare extends React.Component {
 				return healthInfoExists.length >= recipeIds.length;
 			})
 			.map(healthName => {
-				let divider = <Divider fitted key={healthName + 'divider'} />;
+				let divider = <Divider fitted key={healthName + 'divider'} style={{ marginTop: '7.5%' }} />;
 
 				let healthHeader = (
 					<Grid.Row key={healthName + 'name row'} style={Object.assign({}, noMargin, { paddingBottom: '0px' })}>
@@ -185,12 +185,13 @@ export default class Compare extends React.Component {
 					</Grid.Row>
 				);
 
-				return [healthHeader, statValuesRow, statBarsRow];
+				return [divider, healthHeader, statValuesRow, statBarsRow];
 			});
 
 		let content = (
-			<Grid columns='equal' textAlign='center'>
+			<Grid columns='equal' textAlign='center' style={{ marginBottom: '0.5%' }}>
 				{recipeNames}
+				{recipeButtons}
 				{healthStats}
 			</Grid>
 		);
